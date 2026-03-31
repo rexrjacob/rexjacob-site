@@ -48,6 +48,11 @@
     .ripple{position:fixed;border-radius:50%;background:rgba(0,255,65,0.3);transform:scale(0);animation:ripple-out 0.5s ease-out forwards;pointer-events:none;z-index:200}
     @keyframes ripple-out{to{transform:scale(4);opacity:0}}
     footer{font-size:0.55rem;color:var(--green-dim);letter-spacing:0.3em;text-align:center}
+    .content-section{width:100%;max-width:900px;margin-top:40px;padding:0 20px}
+    .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:24px}
+    .content-card{border:1px solid var(--green-dim);padding:24px;background:rgba(0,255,65,0.02)}
+    .content-card h2{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.15em;color:var(--green);margin-bottom:12px;text-shadow:0 0 10px rgba(0,255,65,0.3)}
+    .content-card p{font-size:0.75rem;line-height:1.9;color:var(--green-mid);letter-spacing:0.05em}
     @media(max-width:480px){:root{--cell:6px;--gap:1px}}
     @media(min-width:800px){:root{--cell:11px}}
   </style>
@@ -76,6 +81,29 @@
     <span id="clickedMsg" style="display:none;color:#ff003c;">NODE ACTIVATED — REDIRECTING…</span>
   </p>
   <footer>REXJACOB.COM · ALL NODES ACTIVE · ENTER AT WILL</footer>
+
+  <!-- Content section for AdSense approval -->
+  <section class="content-section">
+    <div class="content-grid">
+      <div class="content-card">
+        <h2>What is The Maze?</h2>
+        <p>RexJacob.com is an interactive discovery experience. Hidden within the QR-code maze are 150 live nodes — each one a unique gateway to a curated destination on the web. Hover to find them. Click to explore.</p>
+      </div>
+      <div class="content-card">
+        <h2>How It Works</h2>
+        <p>Each glowing cell in the maze is a clickable link. The brighter the cell, the more active it is. When you click a node, you'll be taken through a brief gateway before arriving at your destination. Every node leads somewhere different.</p>
+      </div>
+      <div class="content-card">
+        <h2>Why Explore?</h2>
+        <p>The internet is vast and full of hidden gems. The Maze is a curated collection of interesting, entertaining, and informative destinations — handpicked and updated regularly. You never know what you'll discover next.</p>
+      </div>
+      <div class="content-card">
+        <h2>Tips & Tricks</h2>
+        <p>Move your cursor slowly across the grid to spot the brightest nodes. The scanner beam reveals hidden links as it sweeps. Some nodes pulse faster than others — those are the freshest destinations. Check back often as new nodes are added weekly.</p>
+      </div>
+    </div>
+  </section>
+
 </div>
 <div id="tooltip">→ ENTER NODE</div>
 <script>
