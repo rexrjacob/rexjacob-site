@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RexJacob — Enter The Maze</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030a03; --green: #00ff41; --green-dim: #004d14;
+      --green-mid: #00a82a; --green-glow: rgba(0,255,65,0.6);
+      --scanner: rgba(0,255,65,0.12); --cell: 9px; --gap: 1px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;background:var(--bg);color:var(--green);font-family:'Share Tech Mono',monospace;overflow-x:hidden;cursor:crosshair}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.4}
+    body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 4px);pointer-events:none;z-index:998}
+    .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px 60px;gap:24px}
+    header{text-align:center}
+    .site-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,8vw,5rem);letter-spacing:0.15em;color:var(--green);text-shadow:0 0 20px var(--green-glow),0 0 60px rgba(0,255,65,0.2);animation:glitch 6s infinite;position:relative}
+    .site-title::before,.site-title::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;overflow:hidden}
+    .site-title::before{color:#00ffff;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);animation:glitch-before 6s infinite;opacity:0}
+    .site-title::after{color:#ff003c;clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);animation:glitch-after 6s infinite;opacity:0}
+    @keyframes glitch{0%,90%,100%{transform:translate(0)}91%{transform:translate(-2px,1px)}92%{transform:translate(2px,-1px)}93%{transform:translate(-1px,2px)}94%{transform:translate(0)}}
+    @keyframes glitch-before{0%,90%,100%{opacity:0;transform:translate(0)}91%{opacity:1;transform:translate(-3px,0)}93%{opacity:0}}
+    @keyframes glitch-after{0%,90%,100%{opacity:0;transform:translate(0)}92%{opacity:1;transform:translate(3px,1px)}94%{opacity:0}}
+    .subtitle{font-size:0.75rem;letter-spacing:0.4em;color:var(--green-mid);text-transform:uppercase;margin-top:6px}
+    .stats{display:flex;gap:32px;font-size:0.65rem;letter-spacing:0.25em;color:var(--green-mid);border:1px solid var(--green-dim);padding:8px 24px}
+    .stat-val{color:var(--green);font-size:0.85rem}
+    .maze-wrap{position:relative;display:inline-block}
+    .scanner-beam{position:absolute;left:0;right:0;height:40px;background:linear-gradient(to bottom,transparent,var(--scanner) 40%,rgba(0,255,65,0.25) 50%,var(--scanner) 60%,transparent);top:0;animation:scan 4s ease-in-out infinite;pointer-events:none;z-index:10}
+    @keyframes scan{0%{top:-40px}50%{top:100%}100%{top:-40px}}
+    #maze{display:grid;gap:var(--gap);border:2px solid var(--green-dim);box-shadow:0 0 40px rgba(0,255,65,0.08),inset 0 0 40px rgba(0,0,0,0.5);position:relative;background:var(--bg)}
+    .cell{width:var(--cell);height:var(--cell);transition:background 0.1s}
+    .cell.wall{background:var(--green-dim)}
+    .cell.empty{background:transparent}
+    .cell.finder{background:var(--green);box-shadow:0 0 4px var(--green-glow)}
+    .cell.link{background:var(--green);cursor:pointer;animation:pulse-cell 3s ease-in-out infinite;animation-delay:var(--delay,0s);box-shadow:0 0 6px var(--green-glow)}
+    .cell.link:hover{background:#fff;box-shadow:0 0 12px #fff,0 0 30px var(--green);transform:scale(1.4);z-index:20;transition:all 0.08s}
+    .cell.link.clicked{background:#ff003c;box-shadow:0 0 20px #ff003c;animation:click-flash 0.4s forwards}
+    @keyframes pulse-cell{0%,100%{opacity:1}50%{opacity:0.5}}
+    @keyframes click-flash{0%{transform:scale(1.8);background:#fff;box-shadow:0 0 30px #fff}100%{transform:scale(1);background:var(--green-dim);box-shadow:none;opacity:0.3}}
+    .corner-label{position:absolute;font-size:0.5rem;letter-spacing:0.2em;color:var(--green-mid);opacity:0.6}
+    .corner-label.tl{top:-14px;left:0}.corner-label.tr{top:-14px;right:0}.corner-label.bl{bottom:-14px;left:0}
+    #tooltip{position:fixed;background:rgba(0,0,0,0.9);border:1px solid var(--green);color:var(--green);font-size:0.6rem;padding:4px 10px;letter-spacing:0.2em;pointer-events:none;z-index:100;display:none;text-transform:uppercase;box-shadow:0 0 10px var(--green-glow)}
+    .instructions{font-size:0.65rem;letter-spacing:0.3em;color:var(--green-mid);text-align:center;line-height:1.8}
+    .instructions span{color:var(--green)}
+    .ripple{position:fixed;border-radius:50%;background:rgba(0,255,65,0.3);transform:scale(0);animation:ripple-out 0.5s ease-out forwards;pointer-events:none;z-index:200}
+    @keyframes ripple-out{to{transform:scale(4);opacity:0}}
+    footer{font-size:0.55rem;color:var(--green-dim);letter-spacing:0.3em;text-align:center}
+    @media(max-width:480px){:root{--cell:6px;--gap:1px}}
+    @media(min-width:800px){:root{--cell:11px}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1 class="site-title" data-text="REXJACOB.COM">REXJACOB.COM</h1>
+    <p class="subtitle">Scan / Click / Explore</p>
+  </header>
+  <div class="stats">
+    <div>NODES <span class="stat-val" id="totalLinks">—</span></div>
+    <div>DISCOVERED <span class="stat-val" id="clickCount">0</span></div>
+    <div>REMAINING <span class="stat-val" id="remaining">—</span></div>
+  </div>
+  <div class="maze-wrap">
+    <div class="scanner-beam"></div>
+    <div id="maze"></div>
+    <span class="corner-label tl">◼◼◼</span>
+    <span class="corner-label tr">◼◼◼</span>
+    <span class="corner-label bl">◼◼◼</span>
+  </div>
+  <p class="instructions">
+    <span>↗ BRIGHT NODES ARE LIVE LINKS</span><br>
+    CLICK ANY GLOWING CELL TO ENTER · EVERY NODE IS A UNIQUE DESTINATION<br>
+    <span id="clickedMsg" style="display:none;color:#ff003c;">NODE ACTIVATED — REDIRECTING…</span>
+  </p>
+  <footer>REXJACOB.COM · ALL NODES ACTIVE · ENTER AT WILL</footer>
+</div>
+<div id="tooltip">→ ENTER NODE</div>
+<script>
+const MONETIZED_URLS = [
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql",
+  "https://shrinkme.click/OozE",
+  "https://shrinkme.click/eE2LF",
+  "https://shrinkme.click/wD99jhe",
+  "https://shrinkme.click/rfwSw0z",
+  "https://shrinkme.click/E8k3",
+  "https://shrinkme.click/CzpVz",
+  "https://shrinkme.click/glkFP",
+  "https://shrinkme.click/KwSBzO",
+  "https://shrinkme.click/tliZ80Ya",
+  "https://shrinkme.click/vlgHjng",
+  "https://shrinkme.click/F7Aac",
+  "https://shrinkme.click/meHxy",
+  "https://shrinkme.click/ZRLQmWl",
+  "https://shrinkme.click/4UvCwfi",
+  "https://shrinkme.click/kcgqn",
+  "https://shrinkme.click/EDQql"
+];
+const COLS=37,ROWS=37,NUM_LINKS=MONETIZED_URLS.length;
+const maze=document.getElementById('maze');
+maze.style.gridTemplateColumns=`repeat(${COLS}, var(--cell))`;
+let seed=20250331;
+function rand(){seed^=seed<<13;seed^=seed>>17;seed^=seed<<5;return(seed>>>0)/0xFFFFFFFF}
+function finderFilled(r,c,or_,oc){const row=r-or_,col=c-oc;if(row<0||row>6||col<0||col>6)return null;if(row===0||row===6)return true;if(col===0||col===6)return true;if(row===1||row===5)return false;if(col===1||col===5)return false;return true}
+function isTiming(r,c){if(r===6&&c>=8&&c<=COLS-9)return(c%2===0);if(c===6&&r>=8&&r<=ROWS-9)return(r%2===0);return null}
+function isSep(r,c){const z=[[0,7,7,8],[7,0,8,7],[0,COLS-9,7,COLS-8],[7,COLS-8,8,COLS-1],[ROWS-8,0,ROWS-1,7],[ROWS-9,7,ROWS-8,8]];return z.some(([r1,c1,r2,c2])=>r>=r1&&r<=r2&&c>=c1&&c<=c2)}
+const cells=[];
+for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+  let f=finderFilled(r,c,0,0);
+  if(f===null)f=finderFilled(r,c,0,COLS-7);
+  if(f===null)f=finderFilled(r,c,ROWS-7,0);
+  if(f!==null){cells.push(f?'finder':'empty');continue}
+  if(isSep(r,c)){cells.push('empty');continue}
+  const t=isTiming(r,c);
+  if(t!==null){cells.push(t?'finder':'empty');continue}
+  cells.push(rand()>0.48?'wall':'empty');
+}
+const di=cells.map((t,i)=>t==='wall'||t==='empty'?i:-1).filter(i=>i>=0);
+for(let i=di.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[di[i],di[j]]=[di[j],di[i]]}
+for(let i=0;i<Math.min(NUM_LINKS,di.length);i++)cells[di[i]]='link';
+let up=0,clicks=0;
+const tip=document.getElementById('tooltip');
+cells.forEach(type=>{
+  const d=document.createElement('div');
+  d.className=`cell ${type}`;
+  if(type==='link'){
+    const url=MONETIZED_URLS[up++%MONETIZED_URLS.length];
+    d.style.setProperty('--delay',`${(rand()*4).toFixed(2)}s`);
+    d.addEventListener('mouseenter',()=>tip.style.display='block');
+    d.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-20)+'px'});
+    d.addEventListener('mouseleave',()=>tip.style.display='none');
+    d.addEventListener('click',e=>{
+      if(d.classList.contains('clicked'))return;
+      d.classList.add('clicked');
+      clicks++;
+      document.getElementById('clickCount').textContent=clicks;
+      document.getElementById('remaining').textContent=Math.max(0,NUM_LINKS-clicks);
+      const rp=document.createElement('div');rp.className='ripple';
+      rp.style.cssText=`width:30px;height:30px;left:${e.clientX-15}px;top:${e.clientY-15}px`;
+      document.body.appendChild(rp);setTimeout(()=>rp.remove(),600);
+      document.getElementById('clickedMsg').style.display='inline';
+      setTimeout(()=>document.getElementById('clickedMsg').style.display='none',1500);
+      tip.style.display='none';
+      setTimeout(()=>window.open(url,'_blank','noopener'),200);
+    });
+  }
+  maze.appendChild(d);
+});
+document.getElementById('totalLinks').textContent=NUM_LINKS;
+document.getElementById('remaining').textContent=NUM_LINKS;
+</script>
+</body>
+</html>
