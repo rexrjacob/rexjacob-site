@@ -4,114 +4,83 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RexJacob — Curated Amazon Picks</title>
-<meta name="description" content="Hand-picked Amazon products across electronics, books, fashion, gaming, home and more. Best deals curated daily.">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+<meta name="description" content="Hand-picked Amazon products across electronics, books, fashion, gaming, home and more.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8161475797054092" crossorigin="anonymous"></script>
 <style>
-:root{
-  --bg:#0a0804;--gold:#c9a84c;--gold2:#f0d080;
-  --gold-dim:rgba(201,168,76,0.1);--gold-border:rgba(201,168,76,0.22);
-  --cream:#f5efe0;--muted:rgba(245,239,224,0.4);--card:#111009;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+:root{--bg:#0a0804;--gold:#c9a84c;--gold2:#f0d080;--gold-dim:rgba(201,168,76,0.1);--gold-border:rgba(201,168,76,0.22);--cream:#f5efe0;--muted:rgba(245,239,224,0.4);--card:#111009}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--cream);font-family:'Montserrat',sans-serif;min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 40%,rgba(201,168,76,0.06) 0%,transparent 55%),radial-gradient(ellipse at 85% 20%,rgba(201,168,76,0.04) 0%,transparent 45%);pointer-events:none;z-index:0}
-
-/* TOP BAR */
 .topbar{position:relative;z-index:10;background:linear-gradient(90deg,#1a1408,#2a2010,#1a1408);border-bottom:1px solid var(--gold-border);padding:8px 40px;display:flex;justify-content:space-between;align-items:center;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.55)}
-@media(max-width:600px){.topbar{padding:8px 16px;flex-direction:column;gap:4px;text-align:center}}
-
-/* HEADER */
-header{position:relative;z-index:10;text-align:center;padding:56px 20px 44px;border-bottom:1px solid var(--gold-border);background:linear-gradient(180deg,rgba(201,168,76,0.04) 0%,transparent 100%)}
-.crown{font-size:2rem;display:block;margin-bottom:18px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(201,168,76,0.5))}
+@media(max-width:600px){.topbar{padding:8px 16px;flex-direction:column;gap:4px;text-align:center;font-size:0.48rem}}
+header{position:relative;z-index:10;text-align:center;padding:50px 20px 40px;border-bottom:1px solid var(--gold-border);background:linear-gradient(180deg,rgba(201,168,76,0.04) 0%,transparent 100%)}
+.crown{font-size:2rem;display:block;margin-bottom:16px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(201,168,76,0.5))}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-.site-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,9vw,6.5rem);font-weight:300;letter-spacing:0.35em;color:var(--gold);text-shadow:0 0 50px rgba(201,168,76,0.25)}
-.divider{width:130px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:18px auto}
+.site-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,9vw,6rem);font-weight:300;letter-spacing:0.35em;color:var(--gold);text-shadow:0 0 50px rgba(201,168,76,0.25)}
+.divider{width:130px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:16px auto}
 .tagline{font-size:0.6rem;letter-spacing:0.45em;color:rgba(201,168,76,0.5);text-transform:uppercase}
-
-/* SEARCH */
-.search-section{position:relative;z-index:10;max-width:520px;margin:32px auto;padding:0 20px}
+.search-section{position:relative;z-index:10;max-width:580px;margin:30px auto;padding:0 20px}
 .search-bar{display:flex;border:1px solid var(--gold-border);background:rgba(201,168,76,0.05);overflow:hidden;transition:border-color 0.3s}
 .search-bar:focus-within{border-color:rgba(201,168,76,0.6)}
-.search-bar input{flex:1;background:transparent;border:none;padding:14px 20px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:0.78rem;letter-spacing:0.06em;outline:none}
+.search-bar input{flex:1;background:transparent;border:none;padding:15px 20px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:0.82rem;letter-spacing:0.06em;outline:none}
 .search-bar input::placeholder{color:var(--muted)}
-.search-bar button{background:linear-gradient(135deg,var(--gold),#a8821a);border:none;padding:14px 24px;color:#0a0804;font-family:'Montserrat',sans-serif;font-size:0.63rem;font-weight:700;letter-spacing:0.18em;cursor:pointer;transition:opacity 0.2s}
+.search-bar button{background:linear-gradient(135deg,var(--gold),#a8821a);border:none;padding:15px 28px;color:#0a0804;font-family:'Montserrat',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.18em;cursor:pointer;transition:opacity 0.2s;white-space:nowrap}
 .search-bar button:hover{opacity:0.85}
-
-/* CATEGORY NAV */
-.cat-nav{position:relative;z-index:10;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 20px 28px;max-width:900px;margin:0 auto}
+.cat-nav{position:relative;z-index:10;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 20px 26px;max-width:900px;margin:0 auto}
 .cat-pill{border:1px solid var(--gold-border);padding:7px 18px;font-size:0.57rem;letter-spacing:0.26em;color:rgba(201,168,76,0.6);text-transform:uppercase;cursor:pointer;transition:all 0.2s;background:transparent}
 .cat-pill:hover,.cat-pill.active{background:var(--gold);color:#0a0804;border-color:var(--gold);font-weight:700}
-
-/* AD SLOT */
-.ad-slot{position:relative;z-index:10;max-width:1100px;margin:4px auto 24px;padding:0 24px}
-.ad-inner{background:var(--gold-dim);border:1px dashed rgba(201,168,76,0.2);min-height:90px;display:flex;align-items:center;justify-content:center;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.3)}
-
-/* RESULTS COUNT */
-.results-bar{position:relative;z-index:10;max-width:1100px;margin:0 auto 16px;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
+.ad-slot{position:relative;z-index:10;max-width:1100px;margin:4px auto 20px;padding:0 24px}
+.ad-inner{background:var(--gold-dim);border:1px dashed rgba(201,168,76,0.2);min-height:90px;display:flex;align-items:center;justify-content:center}
+.amazon-fallback{position:relative;z-index:10;max-width:1100px;margin:0 auto 20px;padding:0 24px;display:none}
+.fallback-card{background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.05));border:1px solid var(--gold-border);padding:40px;text-align:center}
+.fallback-icon{font-size:3rem;margin-bottom:16px;display:block}
+.fallback-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);margin-bottom:10px}
+.fallback-sub{font-size:0.65rem;letter-spacing:0.2em;color:var(--muted);margin-bottom:28px;line-height:2}
+.fallback-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),#a8821a);color:#0a0804;padding:16px 40px;font-size:0.72rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:opacity 0.2s}
+.fallback-btn:hover{opacity:0.85}
+.fallback-note{font-size:0.55rem;letter-spacing:0.2em;color:rgba(201,168,76,0.35);margin-top:16px}
+.results-bar{position:relative;z-index:10;max-width:1100px;margin:0 auto 14px;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
 .results-count{font-size:0.6rem;letter-spacing:0.2em;color:var(--muted)}
 .results-count span{color:var(--gold)}
-
-/* GRID */
-.grid{position:relative;z-index:10;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:rgba(201,168,76,0.08);max-width:1100px;margin:0 auto;padding:0 24px}
-.product-card{background:var(--card);padding:22px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;display:flex;flex-direction:column}
-.product-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,0.06),transparent);opacity:0;transition:opacity 0.3s}
+.grid{position:relative;z-index:10;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:rgba(201,168,76,0.08);max-width:1100px;margin:0 auto;padding:0 24px}
+.product-card{background:var(--card);cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;display:flex;flex-direction:column}
 .product-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(201,168,76,0.2);z-index:2}
-.product-card:hover::after{opacity:1}
-.product-card.hidden{display:none}
-
-.product-emoji{width:100%;height:130px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:rgba(201,168,76,0.05);margin-bottom:16px;border:1px solid rgba(201,168,76,0.08);position:relative}
-.badge{position:absolute;top:8px;right:8px;background:var(--gold);color:#0a0804;font-size:0.5rem;font-weight:700;letter-spacing:0.15em;padding:2px 7px}
-
+.product-img-wrap{width:100%;height:180px;overflow:hidden;background:#1a1610;position:relative;display:flex;align-items:center;justify-content:center}
+.product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;filter:brightness(0.88)}
+.product-card:hover .product-img-wrap img{transform:scale(1.05);filter:brightness(1)}
+.badge{position:absolute;top:10px;left:10px;background:var(--gold);color:#0a0804;font-size:0.48rem;font-weight:700;letter-spacing:0.15em;padding:3px 8px;z-index:3}
+.card-body{padding:18px;flex:1;display:flex;flex-direction:column}
 .product-cat{font-size:0.52rem;letter-spacing:0.32em;color:var(--gold);text-transform:uppercase;margin-bottom:7px}
-.product-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream);margin-bottom:8px;line-height:1.45;flex:1}
-.product-price{font-size:0.95rem;color:var(--gold2);font-weight:600;margin-bottom:14px}
-.product-old{font-size:0.72rem;color:var(--muted);text-decoration:line-through;margin-left:8px;font-weight:300}
-
-.product-btn{
-  width:100%;background:transparent;border:1px solid var(--gold-border);
-  color:rgba(201,168,76,0.8);padding:9px;
-  font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;
-  cursor:pointer;font-family:'Montserrat',sans-serif;
-  transition:all 0.25s;text-decoration:none;display:block;text-align:center;
-}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);margin-bottom:10px;line-height:1.45;flex:1}
+.price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:14px}
+.product-price{font-size:0.95rem;color:var(--gold2);font-weight:600}
+.product-old{font-size:0.7rem;color:var(--muted);text-decoration:line-through}
+.product-btn{width:100%;background:transparent;border:1px solid var(--gold-border);color:rgba(201,168,76,0.75);padding:10px;font-size:0.57rem;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.25s;text-decoration:none;display:block;text-align:center}
 .product-btn:hover{background:var(--gold);color:#0a0804;border-color:var(--gold);font-weight:700}
-
-/* NO RESULTS */
-.no-results{position:relative;z-index:10;text-align:center;padding:80px 20px;display:none}
-.no-results h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);margin-bottom:10px}
-.no-results p{font-size:0.7rem;color:var(--muted);letter-spacing:0.2em}
-
-/* FOOTER */
-footer{position:relative;z-index:10;text-align:center;padding:40px 20px;font-size:0.52rem;letter-spacing:0.28em;color:rgba(201,168,76,0.3);border-top:1px solid var(--gold-border);margin-top:50px;line-height:2}
-
-@media(max-width:480px){.grid{padding:0 12px}.cat-nav{padding:0 12px 20px}}
+footer{position:relative;z-index:10;text-align:center;padding:40px 20px;font-size:0.52rem;letter-spacing:0.28em;color:rgba(201,168,76,0.3);border-top:1px solid var(--gold-border);margin-top:50px;line-height:2.2}
+@media(max-width:480px){.grid{padding:0 12px}.cat-nav{padding:0 12px 20px}.ad-slot,.amazon-fallback{padding:0 12px}}
 </style>
 </head>
 <body>
-
 <div class="topbar">
-  <span>REXJACOB.COM · AMAZON ASSOCIATES PARTICIPANT</span>
-  <span>AS AN AMAZON ASSOCIATE I EARN FROM QUALIFYING PURCHASES</span>
+  <span>REXJACOB.COM · AMAZON ASSOCIATES</span>
+  <span>WE EARN FROM QUALIFYING PURCHASES</span>
 </div>
-
 <header>
   <span class="crown">♛</span>
   <h1 class="site-title">REXJACOB</h1>
   <div class="divider"></div>
-  <p class="tagline">100 Curated Amazon picks · Updated regularly</p>
+  <p class="tagline">100 Curated Amazon picks · Search anything</p>
 </header>
-
 <div class="search-section">
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search products, brands, categories...">
+    <input type="text" id="searchInput" placeholder="Search anything e.g. Davidoff perfume, iPhone, Nike...">
     <button onclick="doSearch()">SEARCH</button>
   </div>
 </div>
-
-<div class="cat-nav" id="catNav">
-  <div class="cat-pill active" onclick="filterCat('all',this)">All (100)</div>
+<div class="cat-nav">
+  <div class="cat-pill active" onclick="filterCat('all',this)">All</div>
   <div class="cat-pill" onclick="filterCat('Electronics',this)">Electronics</div>
   <div class="cat-pill" onclick="filterCat('Smartphones',this)">Smartphones</div>
   <div class="cat-pill" onclick="filterCat('Laptops',this)">Laptops</div>
@@ -120,225 +89,223 @@ footer{position:relative;z-index:10;text-align:center;padding:40px 20px;font-siz
   <div class="cat-pill" onclick="filterCat('Fashion',this)">Fashion</div>
   <div class="cat-pill" onclick="filterCat('Home',this)">Home & Kitchen</div>
   <div class="cat-pill" onclick="filterCat('Beauty',this)">Beauty</div>
-  <div class="cat-pill" onclick="filterCat('Sports',this)">Sports & Fitness</div>
+  <div class="cat-pill" onclick="filterCat('Sports',this)">Sports</div>
 </div>
-
-<div class="ad-slot">
-  <div class="ad-inner">
-    <!-- Google AdSense Auto Ad -->
-    <ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<div class="ad-slot"><div class="ad-inner"><ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+<div class="amazon-fallback" id="amazonFallback">
+  <div class="fallback-card">
+    <span class="fallback-icon">🔍</span>
+    <div class="fallback-title">Search Amazon for "<span id="fallbackTerm"></span>"</div>
+    <div class="fallback-sub">We don't have this in our curated list yet.<br>Click below to search directly on Amazon and find exactly what you need.</div>
+    <a class="fallback-btn" id="fallbackBtn" target="_blank" rel="noopener">SEARCH ON AMAZON →</a>
+    <div class="fallback-note">* Opens Amazon.in · Affiliate link — we earn from qualifying purchases</div>
   </div>
 </div>
-
-<div class="results-bar">
+<div class="results-bar" id="resultsBar">
   <div class="results-count">Showing <span id="countDisplay">100</span> products</div>
 </div>
-
 <div class="grid" id="productGrid"></div>
-<div class="no-results" id="noResults">
-  <h3>No products found</h3>
-  <p>TRY A DIFFERENT SEARCH OR CATEGORY</p>
-</div>
-
-<div class="ad-slot" style="margin-top:32px">
-  <div class="ad-inner">
-    <ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
-</div>
-
-<footer>
-  REXJACOB.COM · AMAZON ASSOCIATES PARTICIPANT<br>
-  AS AN AMAZON ASSOCIATE I EARN FROM QUALIFYING PURCHASES · ALL PRICES SUBJECT TO CHANGE<br>
-  © 2025 REXJACOB.COM · ALL RIGHTS RESERVED
-</footer>
-
+<div class="ad-slot" style="margin-top:32px"><div class="ad-inner"><ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+<footer>REXJACOB.COM · AMAZON ASSOCIATES PARTICIPANT<br>AS AN AMAZON ASSOCIATE I EARN FROM QUALIFYING PURCHASES · ALL PRICES SUBJECT TO CHANGE<br>© 2025 REXJACOB.COM · ALL RIGHTS RESERVED</footer>
 <script>
-const TAG = "rexjacob-21";
-
-function amzLink(asin) {
-  return `https://www.amazon.in/dp/${asin}/?tag=${TAG}`;
-}
-function amzSearch(q) {
-  return `https://www.amazon.in/s?k=${encodeURIComponent(q)}&tag=${TAG}`;
-}
-
-const PRODUCTS = [
-  // ── ELECTRONICS (20) ──
-  {cat:"Electronics",name:"Sony WH-1000XM5 Wireless Noise Cancelling Headphones",price:"₹24,990",old:"₹29,990",emoji:"🎧",badge:"BESTSELLER",url:amzLink("B09XS7JWHH")},
-  {cat:"Electronics",name:"Apple AirPods Pro (2nd Generation)",price:"₹24,900",old:"₹26,900",emoji:"🎵",badge:"APPLE",url:amzLink("B0BDHWDR12")},
-  {cat:"Electronics",name:"Samsung 55-inch Crystal 4K Smart TV",price:"₹42,990",old:"₹74,900",emoji:"📺",badge:"-43%",url:amzLink("B0BFX79KTZ")},
-  {cat:"Electronics",name:"Kindle Paperwhite (16GB) — 2023",price:"₹15,999",old:"₹19,999",emoji:"📖",badge:"NEW",url:amzLink("B09TMF6742")},
-  {cat:"Electronics",name:"JBL Flip 6 Portable Bluetooth Speaker",price:"₹9,999",old:"₹13,999",emoji:"🔊",badge:"-29%",url:amzLink("B09DG9BJFF")},
-  {cat:"Electronics",name:"boAt Rockerz 450 Bluetooth Headphones",price:"₹1,299",old:"₹3,990",emoji:"🎧",badge:"HOT DEAL",url:amzLink("B07CPSQWP8")},
-  {cat:"Electronics",name:"Canon EOS 1500D 24.1MP DSLR Camera",price:"₹34,999",old:"₹44,995",emoji:"📷",badge:"POPULAR",url:amzLink("B079BCKWTJ")},
-  {cat:"Electronics",name:"GoPro HERO12 Black Action Camera",price:"₹39,500",old:"₹45,500",emoji:"🎥",badge:"NEW",url:amzLink("B0CBF3W8MK")},
-  {cat:"Electronics",name:"Logitech MX Master 3S Wireless Mouse",price:"₹9,995",old:"₹12,995",emoji:"🖱️",badge:"",url:amzLink("B09HM94VDS")},
-  {cat:"Electronics",name:"Anker 65W USB-C Fast Charger",price:"₹2,499",old:"₹3,999",emoji:"⚡",badge:"MUST HAVE",url:amzLink("B09Q6GQXQ4")},
-  {cat:"Electronics",name:"Samsung T7 1TB Portable SSD",price:"₹8,499",old:"₹12,999",emoji:"💾",badge:"-35%",url:amzLink("B0874YJP92")},
-  {cat:"Electronics",name:"TP-Link AX3000 WiFi 6 Router",price:"₹5,999",old:"₹8,999",emoji:"📡",badge:"",url:amzLink("B08H8YLKN8")},
-  {cat:"Electronics",name:"Mi Smart Band 8 Fitness Tracker",price:"₹2,999",old:"₹3,999",emoji:"⌚",badge:"VALUE",url:amzLink("B0C7PP7NQW")},
-  {cat:"Electronics",name:"JBL Charge 5 Waterproof Speaker",price:"₹14,999",old:"₹19,999",emoji:"🔊",badge:"",url:amzLink("B08XLDF3CX")},
-  {cat:"Electronics",name:"boAt Airdopes 141 TWS Earbuds",price:"₹999",old:"₹2,990",emoji:"🎵",badge:"₹999 ONLY",url:amzLink("B09LGZK69T")},
-  {cat:"Electronics",name:"Philips 1000W Mixer Grinder HL7756",price:"₹3,299",old:"₹4,995",emoji:"🥤",badge:"",url:amzSearch("Philips 1000W Mixer Grinder")},
-  {cat:"Electronics",name:"Sony Alpha ZV-E10 Mirrorless Camera",price:"₹55,990",old:"₹64,990",emoji:"📸",badge:"CREATOR",url:amzLink("B09BJG4QKH")},
-  {cat:"Electronics",name:"Noise ColorFit Pro 4 Smartwatch",price:"₹3,499",old:"₹7,999",emoji:"⌚",badge:"-56%",url:amzLink("B0C2NHHKVF")},
-  {cat:"Electronics",name:"Zebronics ZEB-K500MW Wireless Keyboard Mouse",price:"₹999",old:"₹2,499",emoji:"⌨️",badge:"",url:amzSearch("Zebronics wireless keyboard mouse combo")},
-  {cat:"Electronics",name:"Realme Buds Air 5 Pro ANC Earbuds",price:"₹4,999",old:"₹6,999",emoji:"🎧",badge:"ANC",url:amzSearch("Realme Buds Air 5 Pro")},
-
-  // ── SMARTPHONES (10) ──
-  {cat:"Smartphones",name:"Samsung Galaxy S24 Ultra 256GB",price:"₹1,29,999",old:"",emoji:"📱",badge:"FLAGSHIP",url:amzLink("B0CS5H4V6G")},
-  {cat:"Smartphones",name:"Apple iPhone 15 128GB",price:"₹72,900",old:"₹79,900",emoji:"📱",badge:"APPLE",url:amzLink("B0CHX3QBCH")},
-  {cat:"Smartphones",name:"OnePlus 12 256GB",price:"₹64,999",old:"₹69,999",emoji:"📱",badge:"FAST",url:amzLink("B0CQ6ZVNQ7")},
-  {cat:"Smartphones",name:"Samsung Galaxy A55 5G 128GB",price:"₹34,999",old:"₹38,999",emoji:"📱",badge:"5G",url:amzSearch("Samsung Galaxy A55 5G")},
-  {cat:"Smartphones",name:"Apple iPhone 15 Pro 128GB",price:"₹1,19,900",old:"₹1,34,900",emoji:"📱",badge:"PRO",url:amzLink("B0CHX2F5QT")},
-  {cat:"Smartphones",name:"Nothing Phone (2a) 128GB",price:"₹23,999",old:"₹27,999",emoji:"📱",badge:"UNIQUE",url:amzSearch("Nothing Phone 2a")},
-  {cat:"Smartphones",name:"Motorola Edge 50 Pro 256GB",price:"₹29,999",old:"₹35,999",emoji:"📱",badge:"",url:amzSearch("Motorola Edge 50 Pro")},
-  {cat:"Smartphones",name:"Realme 12 Pro+ 5G 256GB",price:"₹27,999",old:"₹31,999",emoji:"📱",badge:"CAMERA",url:amzSearch("Realme 12 Pro Plus 5G")},
-  {cat:"Smartphones",name:"Xiaomi 14 5G 256GB",price:"₹59,999",old:"₹65,999",emoji:"📱",badge:"LEICA",url:amzSearch("Xiaomi 14 5G")},
-  {cat:"Smartphones",name:"Vivo V30 Pro 5G 256GB",price:"₹36,999",old:"₹42,999",emoji:"📱",badge:"AURA",url:amzSearch("Vivo V30 Pro 5G")},
-
-  // ── LAPTOPS (8) ──
-  {cat:"Laptops",name:"Apple MacBook Air M2 13-inch 8GB",price:"₹1,14,900",old:"₹1,19,900",emoji:"💻",badge:"M2 CHIP",url:amzLink("B0B3C5HQHQ")},
-  {cat:"Laptops",name:"Apple MacBook Pro M3 14-inch",price:"₹1,69,900",old:"₹1,79,900",emoji:"💻",badge:"PRO",url:amzLink("B0CM5JV268")},
-  {cat:"Laptops",name:"HP Pavilion 15 Intel i5 12th Gen",price:"₹54,990",old:"₹67,390",emoji:"💻",badge:"",url:amzSearch("HP Pavilion 15 i5 12th gen")},
-  {cat:"Laptops",name:"Dell Inspiron 15 Intel i5 13th Gen",price:"₹57,990",old:"₹69,990",emoji:"💻",badge:"DELL",url:amzSearch("Dell Inspiron 15 i5 13th gen")},
-  {cat:"Laptops",name:"ASUS VivoBook 15 Ryzen 5 16GB",price:"₹47,990",old:"₹58,990",emoji:"💻",badge:"VALUE",url:amzSearch("ASUS VivoBook 15 Ryzen 5")},
-  {cat:"Laptops",name:"Lenovo IdeaPad Slim 5 Intel i5",price:"₹52,990",old:"₹63,990",emoji:"💻",badge:"SLIM",url:amzSearch("Lenovo IdeaPad Slim 5 i5")},
-  {cat:"Laptops",name:"Acer Aspire 5 Intel i5 12th Gen",price:"₹44,990",old:"₹54,990",emoji:"💻",badge:"",url:amzSearch("Acer Aspire 5 i5 12th gen")},
-  {cat:"Laptops",name:"MSI Modern 15 Intel i7 OLED",price:"₹74,990",old:"₹89,990",emoji:"💻",badge:"OLED",url:amzSearch("MSI Modern 15 i7 OLED")},
-
-  // ── GAMING (8) ──
-  {cat:"Gaming",name:"Sony PlayStation 5 Console",price:"₹54,990",old:"₹59,990",emoji:"🎮",badge:"PS5",url:amzLink("B08H93ZRK9")},
-  {cat:"Gaming",name:"Microsoft Xbox Series X 1TB",price:"₹52,990",old:"₹57,990",emoji:"🎮",badge:"XBOX",url:amzLink("B08H75RTZ8")},
-  {cat:"Gaming",name:"Nintendo Switch OLED Model",price:"₹29,999",old:"₹34,999",emoji:"🕹️",badge:"OLED",url:amzLink("B09GFTNSSL")},
-  {cat:"Gaming",name:"Sony DualSense Wireless Controller",price:"₹5,990",old:"₹6,990",emoji:"🎮",badge:"",url:amzLink("B08FC5L3RG")},
-  {cat:"Gaming",name:"Logitech G502 HERO Gaming Mouse",price:"₹4,495",old:"₹6,495",emoji:"🖱️",badge:"GAMING",url:amzLink("B07GBZ4Q68")},
-  {cat:"Gaming",name:"HyperX Cloud II Gaming Headset",price:"₹6,999",old:"₹9,999",emoji:"🎧",badge:"7.1 SURROUND",url:amzLink("B00SAYCXWG")},
-  {cat:"Gaming",name:"Razer DeathAdder V3 Gaming Mouse",price:"₹5,499",old:"₹7,499",emoji:"🖱️",badge:"RAZER",url:amzSearch("Razer DeathAdder V3")},
-  {cat:"Gaming",name:"SteelSeries Arctis Nova 3 Headset",price:"₹7,999",old:"₹10,999",emoji:"🎧",badge:"",url:amzSearch("SteelSeries Arctis Nova 3")},
-
-  // ── BOOKS (15) ──
-  {cat:"Books",name:"Atomic Habits — James Clear",price:"₹499",old:"₹799",emoji:"📚",badge:"#1 BESTSELLER",url:amzLink("B01N5AX61W")},
-  {cat:"Books",name:"Rich Dad Poor Dad — Robert Kiyosaki",price:"₹299",old:"₹450",emoji:"📚",badge:"CLASSIC",url:amzSearch("Rich Dad Poor Dad Robert Kiyosaki")},
-  {cat:"Books",name:"The Psychology of Money — Morgan Housel",price:"₹359",old:"₹599",emoji:"📚",badge:"MUST READ",url:amzLink("B08D9WJ9G8")},
-  {cat:"Books",name:"Ikigai — Héctor García & Francesc Miralles",price:"₹199",old:"₹350",emoji:"📚",badge:"",url:amzLink("B06XFTVQBB")},
-  {cat:"Books",name:"Think and Grow Rich — Napoleon Hill",price:"₹149",old:"₹299",emoji:"📚",badge:"LEGENDARY",url:amzSearch("Think and Grow Rich Napoleon Hill")},
-  {cat:"Books",name:"The Alchemist — Paulo Coelho",price:"₹179",old:"₹299",emoji:"📚",badge:"",url:amzLink("B00U6SFUSS")},
-  {cat:"Books",name:"Sapiens — Yuval Noah Harari",price:"₹499",old:"₹799",emoji:"📚",badge:"MIND BLOWING",url:amzLink("B013TGXNVG")},
-  {cat:"Books",name:"Zero to One — Peter Thiel",price:"₹299",old:"₹499",emoji:"📚",badge:"STARTUP",url:amzLink("B00KHX0II4")},
-  {cat:"Books",name:"Deep Work — Cal Newport",price:"₹349",old:"₹599",emoji:"📚",badge:"",url:amzLink("B013UGXZNG")},
-  {cat:"Books",name:"The 48 Laws of Power — Robert Greene",price:"₹599",old:"₹999",emoji:"📚",badge:"POWER",url:amzSearch("48 Laws of Power Robert Greene")},
-  {cat:"Books",name:"The Subtle Art of Not Giving a F*ck",price:"₹299",old:"₹499",emoji:"📚",badge:"TRENDING",url:amzSearch("Subtle Art of Not Giving a Fck Mark Manson")},
-  {cat:"Books",name:"Man's Search for Meaning — Viktor Frankl",price:"₹199",old:"₹350",emoji:"📚",badge:"",url:amzSearch("Mans Search for Meaning Viktor Frankl")},
-  {cat:"Books",name:"The Lean Startup — Eric Ries",price:"₹499",old:"₹799",emoji:"📚",badge:"ENTREPRENEUR",url:amzSearch("The Lean Startup Eric Ries")},
-  {cat:"Books",name:"Good to Great — Jim Collins",price:"₹549",old:"₹899",emoji:"📚",badge:"",url:amzSearch("Good to Great Jim Collins")},
-  {cat:"Books",name:"Mindset — Carol S. Dweck",price:"₹299",old:"₹499",emoji:"📚",badge:"GROWTH",url:amzSearch("Mindset Carol Dweck")},
-
-  // ── FASHION (10) ──
-  {cat:"Fashion",name:"Levi's Men's 511 Slim Fit Jeans",price:"₹2,399",old:"₹3,999",emoji:"👖",badge:"-40%",url:amzSearch("Levis 511 slim fit jeans men")},
-  {cat:"Fashion",name:"Nike Air Max 270 Running Shoes",price:"₹8,495",old:"₹11,495",emoji:"👟",badge:"NIKE",url:amzSearch("Nike Air Max 270 men")},
-  {cat:"Fashion",name:"Adidas Ultraboost 22 Running Shoes",price:"₹9,999",old:"₹14,999",emoji:"👟",badge:"ADIDAS",url:amzSearch("Adidas Ultraboost 22")},
-  {cat:"Fashion",name:"Ray-Ban Aviator Classic Sunglasses",price:"₹6,490",old:"₹8,490",emoji:"🕶️",badge:"ICONIC",url:amzLink("B001G75TDC")},
-  {cat:"Fashion",name:"Titan Analog Watch for Men",price:"₹2,495",old:"₹3,495",emoji:"⌚",badge:"",url:amzSearch("Titan analog watch men")},
-  {cat:"Fashion",name:"Peter England Men's Formal Shirt",price:"₹899",old:"₹1,799",emoji:"👔",badge:"-50%",url:amzSearch("Peter England formal shirt men")},
-  {cat:"Fashion",name:"Allen Solly Men's Slim Fit Chinos",price:"₹1,299",old:"₹2,499",emoji:"👖",badge:"",url:amzSearch("Allen Solly slim fit chinos men")},
-  {cat:"Fashion",name:"Woodland Men's Leather Casual Shoes",price:"₹3,299",old:"₹4,995",emoji:"👞",badge:"WOODLAND",url:amzSearch("Woodland men leather shoes")},
-  {cat:"Fashion",name:"Tommy Hilfiger Laptop Backpack",price:"₹4,999",old:"₹7,999",emoji:"🎒",badge:"PREMIUM",url:amzSearch("Tommy Hilfiger backpack")},
-  {cat:"Fashion",name:"Fastrack Analog Watch for Men",price:"₹1,595",old:"₹2,495",emoji:"⌚",badge:"",url:amzSearch("Fastrack analog watch men")},
-
-  // ── HOME & KITCHEN (10) ──
-  {cat:"Home",name:"Instant Pot Duo 7-in-1 Electric Pressure Cooker",price:"₹8,295",old:"₹10,995",emoji:"🍲",badge:"BESTSELLER",url:amzLink("B00FLYWNYQ")},
-  {cat:"Home",name:"Philips Air Fryer HD9252 1400W",price:"₹6,495",old:"₹9,995",emoji:"🍟",badge:"HEALTHY",url:amzLink("B07T6GNJMQ")},
-  {cat:"Home",name:"Pigeon Stainless Steel Cookware Set",price:"₹1,599",old:"₹2,999",emoji:"🍳",badge:"-47%",url:amzSearch("Pigeon stainless steel cookware set")},
-  {cat:"Home",name:"Milton Thermosteel Flask 1 Litre",price:"₹699",old:"₹1,295",emoji:"☕",badge:"",url:amzSearch("Milton thermosteel flask 1 litre")},
-  {cat:"Home",name:"Borosil Glass Lunch Box Set",price:"₹699",old:"₹1,099",emoji:"🥡",badge:"",url:amzSearch("Borosil glass lunch box")},
-  {cat:"Home",name:"Prestige Electric Kettle 1.5L",price:"₹799",old:"₹1,299",emoji:"🫖",badge:"",url:amzSearch("Prestige electric kettle 1.5 litre")},
-  {cat:"Home",name:"Havells Pedestal Fan 400mm",price:"₹3,299",old:"₹4,495",emoji:"🌀",badge:"",url:amzSearch("Havells pedestal fan 400mm")},
-  {cat:"Home",name:"Cello Plastic Storage Container Set",price:"₹499",old:"₹899",emoji:"📦",badge:"VALUE",url:amzSearch("Cello storage container set")},
-  {cat:"Home",name:"Godrej aer Pocket Car & Room Freshener",price:"₹199",old:"₹299",emoji:"🌸",badge:"",url:amzSearch("Godrej aer pocket freshener")},
-  {cat:"Home",name:"Solimo Microfibre Cleaning Cloth (10 Pack)",price:"₹299",old:"₹499",emoji:"🧹",badge:"",url:amzSearch("Solimo microfibre cleaning cloth")},
-
-  // ── BEAUTY (10) ──
-  {cat:"Beauty",name:"Mamaearth Onion Hair Oil 250ml",price:"₹349",old:"₹499",emoji:"💆",badge:"NATURAL",url:amzLink("B07WPYZQWW")},
-  {cat:"Beauty",name:"WOW Skin Science Vitamin C Face Wash",price:"₹249",old:"₹399",emoji:"✨",badge:"GLOWING",url:amzSearch("WOW skin science vitamin c face wash")},
-  {cat:"Beauty",name:"Lakme Eyeconic Kajal — Deep Black",price:"₹189",old:"₹250",emoji:"👁️",badge:"",url:amzSearch("Lakme eyeconic kajal")},
-  {cat:"Beauty",name:"The Man Company Beard Growth Oil",price:"₹349",old:"₹499",emoji:"🧔",badge:"MEN",url:amzSearch("The Man Company beard oil")},
-  {cat:"Beauty",name:"Himalaya Purifying Neem Face Wash 200ml",price:"₹165",old:"₹220",emoji:"🌿",badge:"HERBAL",url:amzSearch("Himalaya purifying neem face wash")},
-  {cat:"Beauty",name:"Plum Green Tea Pore Cleansing Face Mask",price:"₹349",old:"₹499",emoji:"🍵",badge:"",url:amzSearch("Plum green tea face mask")},
-  {cat:"Beauty",name:"Dove Body Lotion Deeply Nourishing 400ml",price:"₹299",old:"₹425",emoji:"🧴",badge:"",url:amzSearch("Dove body lotion deeply nourishing 400ml")},
-  {cat:"Beauty",name:"Gillette Fusion ProGlide Razor",price:"₹449",old:"₹650",emoji:"🪒",badge:"MEN",url:amzSearch("Gillette Fusion ProGlide razor")},
-  {cat:"Beauty",name:"L'Oreal Paris Serum Hair Oil",price:"₹399",old:"₹599",emoji:"💇",badge:"",url:amzSearch("LOreal Paris serum hair oil")},
-  {cat:"Beauty",name:"Biotique Bio Honey Gel Face Wash 120ml",price:"₹149",old:"₹225",emoji:"🍯",badge:"ORGANIC",url:amzSearch("Biotique Bio Honey Gel face wash")},
-
-  // ── SPORTS & FITNESS (9) ──
-  {cat:"Sports",name:"Boldfit Premium Yoga Mat 6mm",price:"₹699",old:"₹1,499",emoji:"🧘",badge:"-53%",url:amzSearch("Boldfit yoga mat 6mm")},
-  {cat:"Sports",name:"Fitbit Inspire 3 Health & Fitness Tracker",price:"₹7,999",old:"₹9,999",emoji:"💪",badge:"FITBIT",url:amzLink("B0B255BWKC")},
-  {cat:"Sports",name:"Strauss Resistance Bands Set of 5",price:"₹499",old:"₹999",emoji:"🏋️",badge:"",url:amzSearch("Strauss resistance bands set")},
-  {cat:"Sports",name:"Nivia Storm Basketball Size 7",price:"₹699",old:"₹999",emoji:"🏀",badge:"",url:amzSearch("Nivia storm basketball size 7")},
-  {cat:"Sports",name:"Cosco Hi-Power Football Size 5",price:"₹499",old:"₹799",emoji:"⚽",badge:"",url:amzSearch("Cosco Hi Power football size 5")},
-  {cat:"Sports",name:"Aurion Running Shoes for Men",price:"₹1,299",old:"₹2,499",emoji:"👟",badge:"",url:amzSearch("Aurion running shoes men")},
-  {cat:"Sports",name:"Dumbbell Set 10kg with Rod",price:"₹999",old:"₹1,999",emoji:"🏋️",badge:"GYM",url:amzSearch("dumbbell set 10kg with rod")},
-  {cat:"Sports",name:"Decathlon Adjustable Skipping Rope",price:"₹299",old:"₹499",emoji:"🪢",badge:"",url:amzSearch("Decathlon skipping rope adjustable")},
-  {cat:"Sports",name:"Speedo Adult Swimming Goggles",price:"₹699",old:"₹999",emoji:"🏊",badge:"SPEEDO",url:amzSearch("Speedo adult swimming goggles")},
+const TAG="rexjacob-21";
+function amzLink(a){return`https://www.amazon.in/dp/${a}/?tag=${TAG}`}
+function amzSearch(q){return`https://www.amazon.in/s?k=${encodeURIComponent(q)}&tag=${TAG}`}
+const I={
+  e1:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80",
+  e2:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80",
+  e3:"https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&q=80",
+  e4:"https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=400&q=80",
+  e5:"https://images.unsplash.com/photo-1585298723682-7115561c51b7?w=400&q=80",
+  e6:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&q=80",
+  e7:"https://images.unsplash.com/photo-1526406915894-7bcd65f60845?w=400&q=80",
+  e8:"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80",
+  s1:"https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&q=80",
+  s2:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&q=80",
+  s3:"https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400&q=80",
+  l1:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80",
+  l2:"https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&q=80",
+  l3:"https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&q=80",
+  g1:"https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=400&q=80",
+  g2:"https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&q=80",
+  g3:"https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400&q=80",
+  b1:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&q=80",
+  b2:"https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&q=80",
+  b3:"https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&q=80",
+  f1:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80",
+  f2:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80",
+  f3:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=80",
+  h1:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80",
+  h2:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80",
+  h3:"https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?w=400&q=80",
+  bt1:"https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=400&q=80",
+  bt2:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=80",
+  sp1:"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80",
+  sp2:"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=400&q=80",
+};
+const PRODUCTS=[
+  {cat:"Electronics",name:"Sony WH-1000XM5 Wireless Noise Cancelling Headphones",price:"₹24,990",old:"₹29,990",img:I.e1,badge:"BESTSELLER",url:amzLink("B09XS7JWHH")},
+  {cat:"Electronics",name:"Apple AirPods Pro 2nd Generation",price:"₹24,900",old:"₹26,900",img:I.e3,badge:"APPLE",url:amzLink("B0BDHWDR12")},
+  {cat:"Electronics",name:"Samsung 55-inch Crystal 4K Smart TV",price:"₹42,990",old:"₹74,900",img:I.e4,badge:"-43%",url:amzSearch("Samsung 55 inch 4K Smart TV")},
+  {cat:"Electronics",name:"Kindle Paperwhite 16GB 2023",price:"₹15,999",old:"₹19,999",img:I.e5,badge:"NEW",url:amzLink("B09TMF6742")},
+  {cat:"Electronics",name:"JBL Flip 6 Portable Bluetooth Speaker",price:"₹9,999",old:"₹13,999",img:I.e2,badge:"-29%",url:amzLink("B09DG9BJFF")},
+  {cat:"Electronics",name:"boAt Rockerz 450 Bluetooth Headphones",price:"₹1,299",old:"₹3,990",img:I.e1,badge:"HOT DEAL",url:amzLink("B07CPSQWP8")},
+  {cat:"Electronics",name:"Canon EOS 1500D 24.1MP DSLR Camera",price:"₹34,999",old:"₹44,995",img:I.e6,badge:"POPULAR",url:amzLink("B079BCKWTJ")},
+  {cat:"Electronics",name:"GoPro HERO12 Black Action Camera",price:"₹39,500",old:"₹45,500",img:I.e7,badge:"NEW",url:amzLink("B0CBF3W8MK")},
+  {cat:"Electronics",name:"Logitech MX Master 3S Wireless Mouse",price:"₹9,995",old:"₹12,995",img:I.e8,badge:"",url:amzSearch("Logitech MX Master 3S")},
+  {cat:"Electronics",name:"Anker 65W USB-C Fast Charger",price:"₹2,499",old:"₹3,999",img:I.e5,badge:"MUST HAVE",url:amzSearch("Anker 65W USB-C charger")},
+  {cat:"Electronics",name:"Samsung T7 1TB Portable SSD",price:"₹8,499",old:"₹12,999",img:I.e4,badge:"-35%",url:amzLink("B0874YJP92")},
+  {cat:"Electronics",name:"TP-Link AX3000 WiFi 6 Router",price:"₹5,999",old:"₹8,999",img:I.e8,badge:"",url:amzSearch("TP-Link AX3000 WiFi 6 Router")},
+  {cat:"Electronics",name:"Mi Smart Band 8 Fitness Tracker",price:"₹2,999",old:"₹3,999",img:I.e3,badge:"VALUE",url:amzSearch("Mi Smart Band 8")},
+  {cat:"Electronics",name:"JBL Charge 5 Waterproof Speaker",price:"₹14,999",old:"₹19,999",img:I.e2,badge:"",url:amzLink("B08XLDF3CX")},
+  {cat:"Electronics",name:"boAt Airdopes 141 TWS Earbuds",price:"₹999",old:"₹2,990",img:I.e1,badge:"₹999 ONLY",url:amzSearch("boAt Airdopes 141")},
+  {cat:"Electronics",name:"Sony Alpha ZV-E10 Mirrorless Camera",price:"₹55,990",old:"₹64,990",img:I.e6,badge:"CREATOR",url:amzLink("B09BJG4QKH")},
+  {cat:"Electronics",name:"Noise ColorFit Pro 4 Smartwatch",price:"₹3,499",old:"₹7,999",img:I.e3,badge:"-56%",url:amzSearch("Noise ColorFit Pro 4")},
+  {cat:"Electronics",name:"Realme Buds Air 5 Pro ANC Earbuds",price:"₹4,999",old:"₹6,999",img:I.e1,badge:"ANC",url:amzSearch("Realme Buds Air 5 Pro")},
+  {cat:"Electronics",name:"Zebronics Wireless Keyboard Mouse Combo",price:"₹999",old:"₹2,499",img:I.e8,badge:"",url:amzSearch("Zebronics wireless keyboard mouse")},
+  {cat:"Electronics",name:"Philips 1000W Mixer Grinder",price:"₹3,299",old:"₹4,995",img:I.h3,badge:"",url:amzSearch("Philips 1000W Mixer Grinder")},
+  {cat:"Smartphones",name:"Samsung Galaxy S24 Ultra 256GB",price:"₹1,29,999",old:"",img:I.s1,badge:"FLAGSHIP",url:amzSearch("Samsung Galaxy S24 Ultra")},
+  {cat:"Smartphones",name:"Apple iPhone 15 128GB",price:"₹72,900",old:"₹79,900",img:I.s2,badge:"APPLE",url:amzSearch("Apple iPhone 15 128GB")},
+  {cat:"Smartphones",name:"OnePlus 12 256GB",price:"₹64,999",old:"₹69,999",img:I.s3,badge:"FAST",url:amzSearch("OnePlus 12 256GB")},
+  {cat:"Smartphones",name:"Samsung Galaxy A55 5G 128GB",price:"₹34,999",old:"₹38,999",img:I.s1,badge:"5G",url:amzSearch("Samsung Galaxy A55 5G")},
+  {cat:"Smartphones",name:"Apple iPhone 15 Pro 128GB",price:"₹1,19,900",old:"₹1,34,900",img:I.s2,badge:"PRO",url:amzSearch("Apple iPhone 15 Pro")},
+  {cat:"Smartphones",name:"Nothing Phone 2a 128GB",price:"₹23,999",old:"₹27,999",img:I.s3,badge:"UNIQUE",url:amzSearch("Nothing Phone 2a")},
+  {cat:"Smartphones",name:"Motorola Edge 50 Pro 256GB",price:"₹29,999",old:"₹35,999",img:I.s1,badge:"",url:amzSearch("Motorola Edge 50 Pro")},
+  {cat:"Smartphones",name:"Realme 12 Pro Plus 5G 256GB",price:"₹27,999",old:"₹31,999",img:I.s2,badge:"CAMERA",url:amzSearch("Realme 12 Pro Plus 5G")},
+  {cat:"Smartphones",name:"Xiaomi 14 5G 256GB",price:"₹59,999",old:"₹65,999",img:I.s3,badge:"LEICA",url:amzSearch("Xiaomi 14 5G")},
+  {cat:"Smartphones",name:"Vivo V30 Pro 5G 256GB",price:"₹36,999",old:"₹42,999",img:I.s1,badge:"",url:amzSearch("Vivo V30 Pro 5G")},
+  {cat:"Laptops",name:"Apple MacBook Air M2 13-inch 8GB",price:"₹1,14,900",old:"₹1,19,900",img:I.l1,badge:"M2 CHIP",url:amzSearch("MacBook Air M2")},
+  {cat:"Laptops",name:"Apple MacBook Pro M3 14-inch",price:"₹1,69,900",old:"₹1,79,900",img:I.l2,badge:"PRO",url:amzSearch("MacBook Pro M3 14 inch")},
+  {cat:"Laptops",name:"HP Pavilion 15 Intel i5 12th Gen",price:"₹54,990",old:"₹67,390",img:I.l3,badge:"",url:amzSearch("HP Pavilion 15 i5 12th gen")},
+  {cat:"Laptops",name:"Dell Inspiron 15 Intel i5 13th Gen",price:"₹57,990",old:"₹69,990",img:I.l1,badge:"DELL",url:amzSearch("Dell Inspiron 15 i5 13th gen")},
+  {cat:"Laptops",name:"ASUS VivoBook 15 Ryzen 5 16GB",price:"₹47,990",old:"₹58,990",img:I.l2,badge:"VALUE",url:amzSearch("ASUS VivoBook 15 Ryzen 5")},
+  {cat:"Laptops",name:"Lenovo IdeaPad Slim 5 Intel i5",price:"₹52,990",old:"₹63,990",img:I.l3,badge:"SLIM",url:amzSearch("Lenovo IdeaPad Slim 5 i5")},
+  {cat:"Laptops",name:"Acer Aspire 5 Intel i5 12th Gen",price:"₹44,990",old:"₹54,990",img:I.l1,badge:"",url:amzSearch("Acer Aspire 5 i5 12th gen")},
+  {cat:"Laptops",name:"MSI Modern 15 Intel i7 OLED",price:"₹74,990",old:"₹89,990",img:I.l2,badge:"OLED",url:amzSearch("MSI Modern 15 i7 OLED")},
+  {cat:"Gaming",name:"Sony PlayStation 5 Console",price:"₹54,990",old:"₹59,990",img:I.g1,badge:"PS5",url:amzSearch("Sony PlayStation 5")},
+  {cat:"Gaming",name:"Microsoft Xbox Series X 1TB",price:"₹52,990",old:"₹57,990",img:I.g2,badge:"XBOX",url:amzSearch("Microsoft Xbox Series X")},
+  {cat:"Gaming",name:"Nintendo Switch OLED Model",price:"₹29,999",old:"₹34,999",img:I.g3,badge:"OLED",url:amzLink("B09GFTNSSL")},
+  {cat:"Gaming",name:"Sony DualSense Wireless Controller",price:"₹5,990",old:"₹6,990",img:I.g1,badge:"",url:amzLink("B08FC5L3RG")},
+  {cat:"Gaming",name:"Logitech G502 HERO Gaming Mouse",price:"₹4,495",old:"₹6,495",img:I.g2,badge:"GAMING",url:amzLink("B07GBZ4Q68")},
+  {cat:"Gaming",name:"HyperX Cloud II Gaming Headset",price:"₹6,999",old:"₹9,999",img:I.g3,badge:"7.1 SURROUND",url:amzLink("B00SAYCXWG")},
+  {cat:"Gaming",name:"Razer DeathAdder V3 Gaming Mouse",price:"₹5,499",old:"₹7,499",img:I.g1,badge:"RAZER",url:amzSearch("Razer DeathAdder V3")},
+  {cat:"Gaming",name:"SteelSeries Arctis Nova 3 Headset",price:"₹7,999",old:"₹10,999",img:I.g2,badge:"",url:amzSearch("SteelSeries Arctis Nova 3")},
+  {cat:"Books",name:"Atomic Habits — James Clear",price:"₹499",old:"₹799",img:I.b1,badge:"#1 BESTSELLER",url:amzLink("B01N5AX61W")},
+  {cat:"Books",name:"Rich Dad Poor Dad — Robert Kiyosaki",price:"₹299",old:"₹450",img:I.b2,badge:"CLASSIC",url:amzSearch("Rich Dad Poor Dad")},
+  {cat:"Books",name:"The Psychology of Money — Morgan Housel",price:"₹359",old:"₹599",img:I.b3,badge:"MUST READ",url:amzLink("B08D9WJ9G8")},
+  {cat:"Books",name:"Ikigai — Hector Garcia",price:"₹199",old:"₹350",img:I.b1,badge:"",url:amzLink("B06XFTVQBB")},
+  {cat:"Books",name:"Think and Grow Rich — Napoleon Hill",price:"₹149",old:"₹299",img:I.b2,badge:"LEGENDARY",url:amzSearch("Think and Grow Rich Napoleon Hill")},
+  {cat:"Books",name:"The Alchemist — Paulo Coelho",price:"₹179",old:"₹299",img:I.b3,badge:"",url:amzLink("B00U6SFUSS")},
+  {cat:"Books",name:"Sapiens — Yuval Noah Harari",price:"₹499",old:"₹799",img:I.b1,badge:"MIND BLOWING",url:amzLink("B013TGXNVG")},
+  {cat:"Books",name:"Zero to One — Peter Thiel",price:"₹299",old:"₹499",img:I.b2,badge:"STARTUP",url:amzLink("B00KHX0II4")},
+  {cat:"Books",name:"Deep Work — Cal Newport",price:"₹349",old:"₹599",img:I.b3,badge:"",url:amzLink("B013UGXZNG")},
+  {cat:"Books",name:"The 48 Laws of Power — Robert Greene",price:"₹599",old:"₹999",img:I.b1,badge:"POWER",url:amzSearch("48 Laws of Power Robert Greene")},
+  {cat:"Books",name:"The Subtle Art of Not Giving a F*ck",price:"₹299",old:"₹499",img:I.b2,badge:"TRENDING",url:amzSearch("Subtle Art Not Giving Fck")},
+  {cat:"Books",name:"Man's Search for Meaning — Viktor Frankl",price:"₹199",old:"₹350",img:I.b3,badge:"",url:amzSearch("Mans Search for Meaning")},
+  {cat:"Books",name:"The Lean Startup — Eric Ries",price:"₹499",old:"₹799",img:I.b1,badge:"ENTREPRENEUR",url:amzSearch("The Lean Startup Eric Ries")},
+  {cat:"Books",name:"Good to Great — Jim Collins",price:"₹549",old:"₹899",img:I.b2,badge:"",url:amzSearch("Good to Great Jim Collins")},
+  {cat:"Books",name:"Mindset — Carol S. Dweck",price:"₹299",old:"₹499",img:I.b3,badge:"GROWTH",url:amzSearch("Mindset Carol Dweck")},
+  {cat:"Fashion",name:"Levi's Men's 511 Slim Fit Jeans",price:"₹2,399",old:"₹3,999",img:I.f1,badge:"-40%",url:amzSearch("Levis 511 slim fit jeans men")},
+  {cat:"Fashion",name:"Nike Air Max 270 Running Shoes",price:"₹8,495",old:"₹11,495",img:I.f2,badge:"NIKE",url:amzSearch("Nike Air Max 270")},
+  {cat:"Fashion",name:"Adidas Ultraboost 22 Running Shoes",price:"₹9,999",old:"₹14,999",img:I.f2,badge:"ADIDAS",url:amzSearch("Adidas Ultraboost 22")},
+  {cat:"Fashion",name:"Ray-Ban Aviator Classic Sunglasses",price:"₹6,490",old:"₹8,490",img:I.f3,badge:"ICONIC",url:amzLink("B001G75TDC")},
+  {cat:"Fashion",name:"Titan Analog Watch for Men",price:"₹2,495",old:"₹3,495",img:I.f2,badge:"",url:amzSearch("Titan analog watch men")},
+  {cat:"Fashion",name:"Peter England Men's Formal Shirt",price:"₹899",old:"₹1,799",img:I.f1,badge:"-50%",url:amzSearch("Peter England formal shirt men")},
+  {cat:"Fashion",name:"Allen Solly Men's Slim Fit Chinos",price:"₹1,299",old:"₹2,499",img:I.f1,badge:"",url:amzSearch("Allen Solly slim fit chinos men")},
+  {cat:"Fashion",name:"Woodland Men's Leather Casual Shoes",price:"₹3,299",old:"₹4,995",img:I.f2,badge:"WOODLAND",url:amzSearch("Woodland men leather shoes")},
+  {cat:"Fashion",name:"Tommy Hilfiger Laptop Backpack",price:"₹4,999",old:"₹7,999",img:I.f3,badge:"PREMIUM",url:amzSearch("Tommy Hilfiger backpack")},
+  {cat:"Fashion",name:"Fastrack Analog Watch for Men",price:"₹1,595",old:"₹2,495",img:I.f2,badge:"",url:amzSearch("Fastrack analog watch men")},
+  {cat:"Home",name:"Instant Pot Duo 7-in-1 Pressure Cooker",price:"₹8,295",old:"₹10,995",img:I.h1,badge:"BESTSELLER",url:amzSearch("Instant Pot Duo 7 in 1")},
+  {cat:"Home",name:"Philips Air Fryer HD9252 1400W",price:"₹6,495",old:"₹9,995",img:I.h2,badge:"HEALTHY",url:amzLink("B07T6GNJMQ")},
+  {cat:"Home",name:"Pigeon Stainless Steel Cookware Set",price:"₹1,599",old:"₹2,999",img:I.h3,badge:"-47%",url:amzSearch("Pigeon stainless steel cookware set")},
+  {cat:"Home",name:"Milton Thermosteel Flask 1 Litre",price:"₹699",old:"₹1,295",img:I.h1,badge:"",url:amzSearch("Milton thermosteel flask 1 litre")},
+  {cat:"Home",name:"Borosil Glass Lunch Box Set",price:"₹699",old:"₹1,099",img:I.h2,badge:"",url:amzSearch("Borosil glass lunch box")},
+  {cat:"Home",name:"Prestige Electric Kettle 1.5L",price:"₹799",old:"₹1,299",img:I.h3,badge:"",url:amzSearch("Prestige electric kettle 1.5 litre")},
+  {cat:"Home",name:"Havells Pedestal Fan 400mm",price:"₹3,299",old:"₹4,495",img:I.h1,badge:"",url:amzSearch("Havells pedestal fan 400mm")},
+  {cat:"Home",name:"Cello Plastic Storage Container Set",price:"₹499",old:"₹899",img:I.h2,badge:"VALUE",url:amzSearch("Cello storage container set")},
+  {cat:"Home",name:"Godrej aer Pocket Room Freshener",price:"₹199",old:"₹299",img:I.h3,badge:"",url:amzSearch("Godrej aer pocket freshener")},
+  {cat:"Home",name:"Solimo Microfibre Cleaning Cloth 10 Pack",price:"₹299",old:"₹499",img:I.h1,badge:"",url:amzSearch("Solimo microfibre cleaning cloth")},
+  {cat:"Beauty",name:"Mamaearth Onion Hair Oil 250ml",price:"₹349",old:"₹499",img:I.bt1,badge:"NATURAL",url:amzLink("B07WPYZQWW")},
+  {cat:"Beauty",name:"WOW Skin Science Vitamin C Face Wash",price:"₹249",old:"₹399",img:I.bt2,badge:"GLOWING",url:amzSearch("WOW Vitamin C face wash")},
+  {cat:"Beauty",name:"Lakme Eyeconic Kajal Deep Black",price:"₹189",old:"₹250",img:I.bt1,badge:"",url:amzSearch("Lakme eyeconic kajal")},
+  {cat:"Beauty",name:"The Man Company Beard Growth Oil",price:"₹349",old:"₹499",img:I.bt2,badge:"MEN",url:amzSearch("The Man Company beard oil")},
+  {cat:"Beauty",name:"Himalaya Purifying Neem Face Wash 200ml",price:"₹165",old:"₹220",img:I.bt1,badge:"HERBAL",url:amzSearch("Himalaya neem face wash")},
+  {cat:"Beauty",name:"Plum Green Tea Pore Cleansing Face Mask",price:"₹349",old:"₹499",img:I.bt2,badge:"",url:amzSearch("Plum green tea face mask")},
+  {cat:"Beauty",name:"Dove Body Lotion Deeply Nourishing 400ml",price:"₹299",old:"₹425",img:I.bt1,badge:"",url:amzSearch("Dove body lotion 400ml")},
+  {cat:"Beauty",name:"Gillette Fusion ProGlide Razor",price:"₹449",old:"₹650",img:I.bt2,badge:"MEN",url:amzSearch("Gillette Fusion ProGlide")},
+  {cat:"Beauty",name:"L'Oreal Paris Serum Hair Oil",price:"₹399",old:"₹599",img:I.bt1,badge:"",url:amzSearch("LOreal Paris serum hair oil")},
+  {cat:"Beauty",name:"Biotique Bio Honey Gel Face Wash 120ml",price:"₹149",old:"₹225",img:I.bt2,badge:"ORGANIC",url:amzSearch("Biotique honey gel face wash")},
+  {cat:"Sports",name:"Boldfit Premium Yoga Mat 6mm Anti-Slip",price:"₹699",old:"₹1,499",img:I.sp1,badge:"-53%",url:amzSearch("Boldfit yoga mat 6mm")},
+  {cat:"Sports",name:"Fitbit Inspire 3 Health Fitness Tracker",price:"₹7,999",old:"₹9,999",img:I.sp2,badge:"FITBIT",url:amzLink("B0B255BWKC")},
+  {cat:"Sports",name:"Strauss Resistance Bands Set of 5",price:"₹499",old:"₹999",img:I.sp1,badge:"",url:amzSearch("Strauss resistance bands set")},
+  {cat:"Sports",name:"Nivia Storm Basketball Size 7",price:"₹699",old:"₹999",img:I.sp2,badge:"",url:amzSearch("Nivia storm basketball size 7")},
+  {cat:"Sports",name:"Cosco Hi-Power Football Size 5",price:"₹499",old:"₹799",img:I.sp1,badge:"",url:amzSearch("Cosco football size 5")},
+  {cat:"Sports",name:"Aurion Running Shoes for Men",price:"₹1,299",old:"₹2,499",img:I.sp2,badge:"",url:amzSearch("Aurion running shoes men")},
+  {cat:"Sports",name:"Dumbbell Set 10kg with Rod",price:"₹999",old:"₹1,999",img:I.sp1,badge:"GYM",url:amzSearch("dumbbell set 10kg rod")},
+  {cat:"Sports",name:"Decathlon Adjustable Skipping Rope",price:"₹299",old:"₹499",img:I.sp2,badge:"",url:amzSearch("Decathlon skipping rope")},
+  {cat:"Sports",name:"Speedo Adult Swimming Goggles",price:"₹699",old:"₹999",img:I.sp1,badge:"SPEEDO",url:amzSearch("Speedo swimming goggles adult")},
 ];
-
-let currentCat = 'all';
-let currentSearch = '';
-
-function renderProducts() {
-  const grid = document.getElementById('productGrid');
-  const noResults = document.getElementById('noResults');
-  const countDisplay = document.getElementById('countDisplay');
-  grid.innerHTML = '';
-  let count = 0;
-  PRODUCTS.forEach((p, i) => {
-    const catMatch = currentCat === 'all' || p.cat === currentCat;
-    const searchMatch = !currentSearch || p.name.toLowerCase().includes(currentSearch) || p.cat.toLowerCase().includes(currentSearch);
-    if (!catMatch || !searchMatch) return;
+let currentCat='all',currentSearch='';
+function renderProducts(){
+  const grid=document.getElementById('productGrid');
+  const fallback=document.getElementById('amazonFallback');
+  const resultsBar=document.getElementById('resultsBar');
+  const countDisplay=document.getElementById('countDisplay');
+  grid.innerHTML='';
+  let count=0;
+  PRODUCTS.forEach(p=>{
+    const catMatch=currentCat==='all'||p.cat===currentCat;
+    const searchMatch=!currentSearch||p.name.toLowerCase().includes(currentSearch)||p.cat.toLowerCase().includes(currentSearch);
+    if(!catMatch||!searchMatch)return;
     count++;
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    card.innerHTML = `
-      <div class="product-emoji">
-        ${p.emoji}
-        ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+    const card=document.createElement('div');
+    card.className='product-card';
+    card.innerHTML=`
+      <div class="product-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80'">
+        ${p.badge?`<span class="badge">${p.badge}</span>`:''}
       </div>
-      <div class="product-cat">${p.cat}</div>
-      <div class="product-name">${p.name}</div>
-      <div class="product-price">${p.price}${p.old ? `<span class="product-old">${p.old}</span>` : ''}</div>
-      <a class="product-btn" href="${p.url}" target="_blank" rel="noopener">View on Amazon →</a>
-    `;
+      <div class="card-body">
+        <div class="product-cat">${p.cat}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="price-row">
+          <span class="product-price">${p.price}</span>
+          ${p.old?`<span class="product-old">${p.old}</span>`:''}
+        </div>
+        <a class="product-btn" href="${p.url}" target="_blank" rel="noopener">View on Amazon →</a>
+      </div>`;
     grid.appendChild(card);
   });
-  countDisplay.textContent = count;
-  noResults.style.display = count === 0 ? 'block' : 'none';
+  countDisplay.textContent=count;
+  if(count===0&&currentSearch){
+    fallback.style.display='block';
+    resultsBar.style.display='none';
+    document.getElementById('fallbackTerm').textContent=currentSearch;
+    const searchUrl=`https://www.amazon.in/s?k=${encodeURIComponent(currentSearch)}&tag=${TAG}`;
+    const btn=document.getElementById('fallbackBtn');
+    btn.href=searchUrl;
+    btn.textContent=`SEARCH "${currentSearch.toUpperCase()}" ON AMAZON →`;
+  } else {
+    fallback.style.display='none';
+    resultsBar.style.display='flex';
+  }
 }
-
-function filterCat(cat, el) {
-  currentCat = cat;
-  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+function filterCat(cat,el){
+  currentCat=cat;currentSearch='';
+  document.getElementById('searchInput').value='';
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
-  currentSearch = '';
-  document.getElementById('searchInput').value = '';
   renderProducts();
 }
-
-function doSearch() {
-  currentSearch = document.getElementById('searchInput').value.toLowerCase().trim();
-  currentCat = 'all';
-  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+function doSearch(){
+  currentSearch=document.getElementById('searchInput').value.toLowerCase().trim();
+  currentCat='all';
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
   document.querySelector('.cat-pill').classList.add('active');
   renderProducts();
 }
-
-document.getElementById('searchInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doSearch();
-});
-
-// Init
+document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
 renderProducts();
-
-// AdSense
 try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
 try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
 </script>
