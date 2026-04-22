@@ -1,317 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RexJacob — Enter The Maze</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&display=swap" rel="stylesheet">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8161475797054092" crossorigin="anonymous"></script>
-  <style>
-    :root {
-      --bg: #030a03; --green: #00ff41; --green-dim: #004d14;
-      --green-mid: #00a82a; --green-glow: rgba(0,255,65,0.6);
-      --scanner: rgba(0,255,65,0.12); --cell: 9px; --gap: 1px;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;background:var(--bg);color:var(--green);font-family:'Share Tech Mono',monospace;overflow-x:hidden;cursor:crosshair}
-    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.4}
-    body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 4px);pointer-events:none;z-index:998}
-    .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px 60px;gap:24px}
-    header{text-align:center}
-    .site-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,8vw,5rem);letter-spacing:0.15em;color:var(--green);text-shadow:0 0 20px var(--green-glow),0 0 60px rgba(0,255,65,0.2);animation:glitch 6s infinite;position:relative}
-    .site-title::before,.site-title::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;overflow:hidden}
-    .site-title::before{color:#00ffff;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);animation:glitch-before 6s infinite;opacity:0}
-    .site-title::after{color:#ff003c;clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);animation:glitch-after 6s infinite;opacity:0}
-    @keyframes glitch{0%,90%,100%{transform:translate(0)}91%{transform:translate(-2px,1px)}92%{transform:translate(2px,-1px)}93%{transform:translate(-1px,2px)}94%{transform:translate(0)}}
-    @keyframes glitch-before{0%,90%,100%{opacity:0;transform:translate(0)}91%{opacity:1;transform:translate(-3px,0)}93%{opacity:0}}
-    @keyframes glitch-after{0%,90%,100%{opacity:0;transform:translate(0)}92%{opacity:1;transform:translate(3px,1px)}94%{opacity:0}}
-    .subtitle{font-size:0.75rem;letter-spacing:0.4em;color:var(--green-mid);text-transform:uppercase;margin-top:6px}
-    .stats{display:flex;gap:32px;font-size:0.65rem;letter-spacing:0.25em;color:var(--green-mid);border:1px solid var(--green-dim);padding:8px 24px}
-    .stat-val{color:var(--green);font-size:0.85rem}
-    .maze-wrap{position:relative;display:inline-block}
-    .scanner-beam{position:absolute;left:0;right:0;height:40px;background:linear-gradient(to bottom,transparent,var(--scanner) 40%,rgba(0,255,65,0.25) 50%,var(--scanner) 60%,transparent);top:0;animation:scan 4s ease-in-out infinite;pointer-events:none;z-index:10}
-    @keyframes scan{0%{top:-40px}50%{top:100%}100%{top:-40px}}
-    #maze{display:grid;gap:var(--gap);border:2px solid var(--green-dim);box-shadow:0 0 40px rgba(0,255,65,0.08),inset 0 0 40px rgba(0,0,0,0.5);position:relative;background:var(--bg)}
-    .cell{width:var(--cell);height:var(--cell);transition:background 0.1s}
-    .cell.wall{background:var(--green-dim)}
-    .cell.empty{background:transparent}
-    .cell.finder{background:var(--green);box-shadow:0 0 4px var(--green-glow)}
-    .cell.link{background:var(--green);cursor:pointer;animation:pulse-cell 3s ease-in-out infinite;animation-delay:var(--delay,0s);box-shadow:0 0 6px var(--green-glow)}
-    .cell.link:hover{background:#fff;box-shadow:0 0 12px #fff,0 0 30px var(--green);transform:scale(1.4);z-index:20;transition:all 0.08s}
-    .cell.link.clicked{background:#ff003c;box-shadow:0 0 20px #ff003c;animation:click-flash 0.4s forwards}
-    @keyframes pulse-cell{0%,100%{opacity:1}50%{opacity:0.5}}
-    @keyframes click-flash{0%{transform:scale(1.8);background:#fff;box-shadow:0 0 30px #fff}100%{transform:scale(1);background:var(--green-dim);box-shadow:none;opacity:0.3}}
-    .corner-label{position:absolute;font-size:0.5rem;letter-spacing:0.2em;color:var(--green-mid);opacity:0.6}
-    .corner-label.tl{top:-14px;left:0}.corner-label.tr{top:-14px;right:0}.corner-label.bl{bottom:-14px;left:0}
-    #tooltip{position:fixed;background:rgba(0,0,0,0.9);border:1px solid var(--green);color:var(--green);font-size:0.6rem;padding:4px 10px;letter-spacing:0.2em;pointer-events:none;z-index:100;display:none;text-transform:uppercase;box-shadow:0 0 10px var(--green-glow)}
-    .instructions{font-size:0.65rem;letter-spacing:0.3em;color:var(--green-mid);text-align:center;line-height:1.8}
-    .instructions span{color:var(--green)}
-    .ripple{position:fixed;border-radius:50%;background:rgba(0,255,65,0.3);transform:scale(0);animation:ripple-out 0.5s ease-out forwards;pointer-events:none;z-index:200}
-    @keyframes ripple-out{to{transform:scale(4);opacity:0}}
-    footer{font-size:0.55rem;color:var(--green-dim);letter-spacing:0.3em;text-align:center}
-    .content-section{width:100%;max-width:900px;margin-top:40px;padding:0 20px}
-    .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:24px}
-    .content-card{border:1px solid var(--green-dim);padding:24px;background:rgba(0,255,65,0.02)}
-    .content-card h2{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.15em;color:var(--green);margin-bottom:12px;text-shadow:0 0 10px rgba(0,255,65,0.3)}
-    .content-card p{font-size:0.75rem;line-height:1.9;color:var(--green-mid);letter-spacing:0.05em}
-    @media(max-width:480px){:root{--cell:6px;--gap:1px}}
-    @media(min-width:800px){:root{--cell:11px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RexJacob — Curated Amazon Picks</title>
+<meta name="description" content="Hand-picked Amazon products across electronics, books, fashion, gaming, home and more. Best deals curated daily.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8161475797054092" crossorigin="anonymous"></script>
+<style>
+:root{
+  --bg:#0a0804;--gold:#c9a84c;--gold2:#f0d080;
+  --gold-dim:rgba(201,168,76,0.1);--gold-border:rgba(201,168,76,0.22);
+  --cream:#f5efe0;--muted:rgba(245,239,224,0.4);--card:#111009;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Montserrat',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 40%,rgba(201,168,76,0.06) 0%,transparent 55%),radial-gradient(ellipse at 85% 20%,rgba(201,168,76,0.04) 0%,transparent 45%);pointer-events:none;z-index:0}
+
+/* TOP BAR */
+.topbar{position:relative;z-index:10;background:linear-gradient(90deg,#1a1408,#2a2010,#1a1408);border-bottom:1px solid var(--gold-border);padding:8px 40px;display:flex;justify-content:space-between;align-items:center;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.55)}
+@media(max-width:600px){.topbar{padding:8px 16px;flex-direction:column;gap:4px;text-align:center}}
+
+/* HEADER */
+header{position:relative;z-index:10;text-align:center;padding:56px 20px 44px;border-bottom:1px solid var(--gold-border);background:linear-gradient(180deg,rgba(201,168,76,0.04) 0%,transparent 100%)}
+.crown{font-size:2rem;display:block;margin-bottom:18px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(201,168,76,0.5))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.site-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,9vw,6.5rem);font-weight:300;letter-spacing:0.35em;color:var(--gold);text-shadow:0 0 50px rgba(201,168,76,0.25)}
+.divider{width:130px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:18px auto}
+.tagline{font-size:0.6rem;letter-spacing:0.45em;color:rgba(201,168,76,0.5);text-transform:uppercase}
+
+/* SEARCH */
+.search-section{position:relative;z-index:10;max-width:520px;margin:32px auto;padding:0 20px}
+.search-bar{display:flex;border:1px solid var(--gold-border);background:rgba(201,168,76,0.05);overflow:hidden;transition:border-color 0.3s}
+.search-bar:focus-within{border-color:rgba(201,168,76,0.6)}
+.search-bar input{flex:1;background:transparent;border:none;padding:14px 20px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:0.78rem;letter-spacing:0.06em;outline:none}
+.search-bar input::placeholder{color:var(--muted)}
+.search-bar button{background:linear-gradient(135deg,var(--gold),#a8821a);border:none;padding:14px 24px;color:#0a0804;font-family:'Montserrat',sans-serif;font-size:0.63rem;font-weight:700;letter-spacing:0.18em;cursor:pointer;transition:opacity 0.2s}
+.search-bar button:hover{opacity:0.85}
+
+/* CATEGORY NAV */
+.cat-nav{position:relative;z-index:10;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 20px 28px;max-width:900px;margin:0 auto}
+.cat-pill{border:1px solid var(--gold-border);padding:7px 18px;font-size:0.57rem;letter-spacing:0.26em;color:rgba(201,168,76,0.6);text-transform:uppercase;cursor:pointer;transition:all 0.2s;background:transparent}
+.cat-pill:hover,.cat-pill.active{background:var(--gold);color:#0a0804;border-color:var(--gold);font-weight:700}
+
+/* AD SLOT */
+.ad-slot{position:relative;z-index:10;max-width:1100px;margin:4px auto 24px;padding:0 24px}
+.ad-inner{background:var(--gold-dim);border:1px dashed rgba(201,168,76,0.2);min-height:90px;display:flex;align-items:center;justify-content:center;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.3)}
+
+/* RESULTS COUNT */
+.results-bar{position:relative;z-index:10;max-width:1100px;margin:0 auto 16px;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
+.results-count{font-size:0.6rem;letter-spacing:0.2em;color:var(--muted)}
+.results-count span{color:var(--gold)}
+
+/* GRID */
+.grid{position:relative;z-index:10;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:rgba(201,168,76,0.08);max-width:1100px;margin:0 auto;padding:0 24px}
+.product-card{background:var(--card);padding:22px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.product-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,0.06),transparent);opacity:0;transition:opacity 0.3s}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(201,168,76,0.2);z-index:2}
+.product-card:hover::after{opacity:1}
+.product-card.hidden{display:none}
+
+.product-emoji{width:100%;height:130px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:rgba(201,168,76,0.05);margin-bottom:16px;border:1px solid rgba(201,168,76,0.08);position:relative}
+.badge{position:absolute;top:8px;right:8px;background:var(--gold);color:#0a0804;font-size:0.5rem;font-weight:700;letter-spacing:0.15em;padding:2px 7px}
+
+.product-cat{font-size:0.52rem;letter-spacing:0.32em;color:var(--gold);text-transform:uppercase;margin-bottom:7px}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream);margin-bottom:8px;line-height:1.45;flex:1}
+.product-price{font-size:0.95rem;color:var(--gold2);font-weight:600;margin-bottom:14px}
+.product-old{font-size:0.72rem;color:var(--muted);text-decoration:line-through;margin-left:8px;font-weight:300}
+
+.product-btn{
+  width:100%;background:transparent;border:1px solid var(--gold-border);
+  color:rgba(201,168,76,0.8);padding:9px;
+  font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;
+  cursor:pointer;font-family:'Montserrat',sans-serif;
+  transition:all 0.25s;text-decoration:none;display:block;text-align:center;
+}
+.product-btn:hover{background:var(--gold);color:#0a0804;border-color:var(--gold);font-weight:700}
+
+/* NO RESULTS */
+.no-results{position:relative;z-index:10;text-align:center;padding:80px 20px;display:none}
+.no-results h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);margin-bottom:10px}
+.no-results p{font-size:0.7rem;color:var(--muted);letter-spacing:0.2em}
+
+/* FOOTER */
+footer{position:relative;z-index:10;text-align:center;padding:40px 20px;font-size:0.52rem;letter-spacing:0.28em;color:rgba(201,168,76,0.3);border-top:1px solid var(--gold-border);margin-top:50px;line-height:2}
+
+@media(max-width:480px){.grid{padding:0 12px}.cat-nav{padding:0 12px 20px}}
+</style>
 </head>
 <body>
-<div class="page">
-  <header>
-    <h1 class="site-title" data-text="REXJACOB.COM">REXJACOB.COM</h1>
-    <p class="subtitle">Scan / Click / Explore</p>
-  </header>
-  <div class="stats">
-    <div>NODES <span class="stat-val" id="totalLinks">—</span></div>
-    <div>DISCOVERED <span class="stat-val" id="clickCount">0</span></div>
-    <div>REMAINING <span class="stat-val" id="remaining">—</span></div>
-  </div>
-  <div class="maze-wrap">
-    <div class="scanner-beam"></div>
-    <div id="maze"></div>
-    <span class="corner-label tl">◼◼◼</span>
-    <span class="corner-label tr">◼◼◼</span>
-    <span class="corner-label bl">◼◼◼</span>
-  </div>
-  <p class="instructions">
-    <span>↗ BRIGHT NODES ARE LIVE LINKS</span><br>
-    CLICK ANY GLOWING CELL TO ENTER · EVERY NODE IS A UNIQUE DESTINATION<br>
-    <span id="clickedMsg" style="display:none;color:#ff003c;">NODE ACTIVATED — REDIRECTING…</span>
-  </p>
-  <footer>REXJACOB.COM · ALL NODES ACTIVE · ENTER AT WILL</footer>
 
-  <!-- Content section for AdSense approval -->
-  <section class="content-section">
-    <div class="content-grid">
-      <div class="content-card">
-        <h2>What is The Maze?</h2>
-        <p>RexJacob.com is an interactive discovery experience. Hidden within the QR-code maze are 150 live nodes — each one a unique gateway to a curated destination on the web. Hover to find them. Click to explore.</p>
-      </div>
-      <div class="content-card">
-        <h2>How It Works</h2>
-        <p>Each glowing cell in the maze is a clickable link. The brighter the cell, the more active it is. When you click a node, you'll be taken through a brief gateway before arriving at your destination. Every node leads somewhere different.</p>
-      </div>
-      <div class="content-card">
-        <h2>Why Explore?</h2>
-        <p>The internet is vast and full of hidden gems. The Maze is a curated collection of interesting, entertaining, and informative destinations — handpicked and updated regularly. You never know what you'll discover next.</p>
-      </div>
-      <div class="content-card">
-        <h2>Tips & Tricks</h2>
-        <p>Move your cursor slowly across the grid to spot the brightest nodes. The scanner beam reveals hidden links as it sweeps. Some nodes pulse faster than others — those are the freshest destinations. Check back often as new nodes are added weekly.</p>
-      </div>
-    </div>
-  </section>
-
+<div class="topbar">
+  <span>REXJACOB.COM · AMAZON ASSOCIATES PARTICIPANT</span>
+  <span>AS AN AMAZON ASSOCIATE I EARN FROM QUALIFYING PURCHASES</span>
 </div>
-<div id="tooltip">→ ENTER NODE</div>
+
+<header>
+  <span class="crown">♛</span>
+  <h1 class="site-title">REXJACOB</h1>
+  <div class="divider"></div>
+  <p class="tagline">100 Curated Amazon picks · Updated regularly</p>
+</header>
+
+<div class="search-section">
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search products, brands, categories...">
+    <button onclick="doSearch()">SEARCH</button>
+  </div>
+</div>
+
+<div class="cat-nav" id="catNav">
+  <div class="cat-pill active" onclick="filterCat('all',this)">All (100)</div>
+  <div class="cat-pill" onclick="filterCat('Electronics',this)">Electronics</div>
+  <div class="cat-pill" onclick="filterCat('Smartphones',this)">Smartphones</div>
+  <div class="cat-pill" onclick="filterCat('Laptops',this)">Laptops</div>
+  <div class="cat-pill" onclick="filterCat('Gaming',this)">Gaming</div>
+  <div class="cat-pill" onclick="filterCat('Books',this)">Books</div>
+  <div class="cat-pill" onclick="filterCat('Fashion',this)">Fashion</div>
+  <div class="cat-pill" onclick="filterCat('Home',this)">Home & Kitchen</div>
+  <div class="cat-pill" onclick="filterCat('Beauty',this)">Beauty</div>
+  <div class="cat-pill" onclick="filterCat('Sports',this)">Sports & Fitness</div>
+</div>
+
+<div class="ad-slot">
+  <div class="ad-inner">
+    <!-- Google AdSense Auto Ad -->
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+</div>
+
+<div class="results-bar">
+  <div class="results-count">Showing <span id="countDisplay">100</span> products</div>
+</div>
+
+<div class="grid" id="productGrid"></div>
+<div class="no-results" id="noResults">
+  <h3>No products found</h3>
+  <p>TRY A DIFFERENT SEARCH OR CATEGORY</p>
+</div>
+
+<div class="ad-slot" style="margin-top:32px">
+  <div class="ad-inner">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+</div>
+
+<footer>
+  REXJACOB.COM · AMAZON ASSOCIATES PARTICIPANT<br>
+  AS AN AMAZON ASSOCIATE I EARN FROM QUALIFYING PURCHASES · ALL PRICES SUBJECT TO CHANGE<br>
+  © 2025 REXJACOB.COM · ALL RIGHTS RESERVED
+</footer>
+
 <script>
-const MONETIZED_URLS = [
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql",
-  "https://shrinkme.click/OozE",
-  "https://shrinkme.click/eE2LF",
-  "https://shrinkme.click/wD99jhe",
-  "https://shrinkme.click/rfwSw0z",
-  "https://shrinkme.click/E8k3",
-  "https://shrinkme.click/CzpVz",
-  "https://shrinkme.click/glkFP",
-  "https://shrinkme.click/KwSBzO",
-  "https://shrinkme.click/tliZ80Ya",
-  "https://shrinkme.click/vlgHjng",
-  "https://shrinkme.click/F7Aac",
-  "https://shrinkme.click/meHxy",
-  "https://shrinkme.click/ZRLQmWl",
-  "https://shrinkme.click/4UvCwfi",
-  "https://shrinkme.click/kcgqn",
-  "https://shrinkme.click/EDQql"
-];
-const COLS=37,ROWS=37,NUM_LINKS=MONETIZED_URLS.length;
-const maze=document.getElementById('maze');
-maze.style.gridTemplateColumns=`repeat(${COLS}, var(--cell))`;
-let seed=20250331;
-function rand(){seed^=seed<<13;seed^=seed>>17;seed^=seed<<5;return(seed>>>0)/0xFFFFFFFF}
-function finderFilled(r,c,or_,oc){const row=r-or_,col=c-oc;if(row<0||row>6||col<0||col>6)return null;if(row===0||row===6)return true;if(col===0||col===6)return true;if(row===1||row===5)return false;if(col===1||col===5)return false;return true}
-function isTiming(r,c){if(r===6&&c>=8&&c<=COLS-9)return(c%2===0);if(c===6&&r>=8&&r<=ROWS-9)return(r%2===0);return null}
-function isSep(r,c){const z=[[0,7,7,8],[7,0,8,7],[0,COLS-9,7,COLS-8],[7,COLS-8,8,COLS-1],[ROWS-8,0,ROWS-1,7],[ROWS-9,7,ROWS-8,8]];return z.some(([r1,c1,r2,c2])=>r>=r1&&r<=r2&&c>=c1&&c<=c2)}
-const cells=[];
-for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-  let f=finderFilled(r,c,0,0);
-  if(f===null)f=finderFilled(r,c,0,COLS-7);
-  if(f===null)f=finderFilled(r,c,ROWS-7,0);
-  if(f!==null){cells.push(f?'finder':'empty');continue}
-  if(isSep(r,c)){cells.push('empty');continue}
-  const t=isTiming(r,c);
-  if(t!==null){cells.push(t?'finder':'empty');continue}
-  cells.push(rand()>0.48?'wall':'empty');
+const TAG = "rexjacob-21";
+
+function amzLink(asin) {
+  return `https://www.amazon.in/dp/${asin}/?tag=${TAG}`;
 }
-const di=cells.map((t,i)=>t==='wall'||t==='empty'?i:-1).filter(i=>i>=0);
-for(let i=di.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[di[i],di[j]]=[di[j],di[i]]}
-for(let i=0;i<Math.min(NUM_LINKS,di.length);i++)cells[di[i]]='link';
-let up=0,clicks=0;
-const tip=document.getElementById('tooltip');
-cells.forEach(type=>{
-  const d=document.createElement('div');
-  d.className=`cell ${type}`;
-  if(type==='link'){
-    const url=MONETIZED_URLS[up++%MONETIZED_URLS.length];
-    d.style.setProperty('--delay',`${(rand()*4).toFixed(2)}s`);
-    d.addEventListener('mouseenter',()=>tip.style.display='block');
-    d.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-20)+'px'});
-    d.addEventListener('mouseleave',()=>tip.style.display='none');
-    d.addEventListener('click',e=>{
-      if(d.classList.contains('clicked'))return;
-      d.classList.add('clicked');
-      clicks++;
-      document.getElementById('clickCount').textContent=clicks;
-      document.getElementById('remaining').textContent=Math.max(0,NUM_LINKS-clicks);
-      const rp=document.createElement('div');rp.className='ripple';
-      rp.style.cssText=`width:30px;height:30px;left:${e.clientX-15}px;top:${e.clientY-15}px`;
-      document.body.appendChild(rp);setTimeout(()=>rp.remove(),600);
-      document.getElementById('clickedMsg').style.display='inline';
-      setTimeout(()=>document.getElementById('clickedMsg').style.display='none',1500);
-      tip.style.display='none';
-      setTimeout(()=>window.open(url,'_blank','noopener'),200);
-    });
-  }
-  maze.appendChild(d);
+function amzSearch(q) {
+  return `https://www.amazon.in/s?k=${encodeURIComponent(q)}&tag=${TAG}`;
+}
+
+const PRODUCTS = [
+  // ── ELECTRONICS (20) ──
+  {cat:"Electronics",name:"Sony WH-1000XM5 Wireless Noise Cancelling Headphones",price:"₹24,990",old:"₹29,990",emoji:"🎧",badge:"BESTSELLER",url:amzLink("B09XS7JWHH")},
+  {cat:"Electronics",name:"Apple AirPods Pro (2nd Generation)",price:"₹24,900",old:"₹26,900",emoji:"🎵",badge:"APPLE",url:amzLink("B0BDHWDR12")},
+  {cat:"Electronics",name:"Samsung 55-inch Crystal 4K Smart TV",price:"₹42,990",old:"₹74,900",emoji:"📺",badge:"-43%",url:amzLink("B0BFX79KTZ")},
+  {cat:"Electronics",name:"Kindle Paperwhite (16GB) — 2023",price:"₹15,999",old:"₹19,999",emoji:"📖",badge:"NEW",url:amzLink("B09TMF6742")},
+  {cat:"Electronics",name:"JBL Flip 6 Portable Bluetooth Speaker",price:"₹9,999",old:"₹13,999",emoji:"🔊",badge:"-29%",url:amzLink("B09DG9BJFF")},
+  {cat:"Electronics",name:"boAt Rockerz 450 Bluetooth Headphones",price:"₹1,299",old:"₹3,990",emoji:"🎧",badge:"HOT DEAL",url:amzLink("B07CPSQWP8")},
+  {cat:"Electronics",name:"Canon EOS 1500D 24.1MP DSLR Camera",price:"₹34,999",old:"₹44,995",emoji:"📷",badge:"POPULAR",url:amzLink("B079BCKWTJ")},
+  {cat:"Electronics",name:"GoPro HERO12 Black Action Camera",price:"₹39,500",old:"₹45,500",emoji:"🎥",badge:"NEW",url:amzLink("B0CBF3W8MK")},
+  {cat:"Electronics",name:"Logitech MX Master 3S Wireless Mouse",price:"₹9,995",old:"₹12,995",emoji:"🖱️",badge:"",url:amzLink("B09HM94VDS")},
+  {cat:"Electronics",name:"Anker 65W USB-C Fast Charger",price:"₹2,499",old:"₹3,999",emoji:"⚡",badge:"MUST HAVE",url:amzLink("B09Q6GQXQ4")},
+  {cat:"Electronics",name:"Samsung T7 1TB Portable SSD",price:"₹8,499",old:"₹12,999",emoji:"💾",badge:"-35%",url:amzLink("B0874YJP92")},
+  {cat:"Electronics",name:"TP-Link AX3000 WiFi 6 Router",price:"₹5,999",old:"₹8,999",emoji:"📡",badge:"",url:amzLink("B08H8YLKN8")},
+  {cat:"Electronics",name:"Mi Smart Band 8 Fitness Tracker",price:"₹2,999",old:"₹3,999",emoji:"⌚",badge:"VALUE",url:amzLink("B0C7PP7NQW")},
+  {cat:"Electronics",name:"JBL Charge 5 Waterproof Speaker",price:"₹14,999",old:"₹19,999",emoji:"🔊",badge:"",url:amzLink("B08XLDF3CX")},
+  {cat:"Electronics",name:"boAt Airdopes 141 TWS Earbuds",price:"₹999",old:"₹2,990",emoji:"🎵",badge:"₹999 ONLY",url:amzLink("B09LGZK69T")},
+  {cat:"Electronics",name:"Philips 1000W Mixer Grinder HL7756",price:"₹3,299",old:"₹4,995",emoji:"🥤",badge:"",url:amzSearch("Philips 1000W Mixer Grinder")},
+  {cat:"Electronics",name:"Sony Alpha ZV-E10 Mirrorless Camera",price:"₹55,990",old:"₹64,990",emoji:"📸",badge:"CREATOR",url:amzLink("B09BJG4QKH")},
+  {cat:"Electronics",name:"Noise ColorFit Pro 4 Smartwatch",price:"₹3,499",old:"₹7,999",emoji:"⌚",badge:"-56%",url:amzLink("B0C2NHHKVF")},
+  {cat:"Electronics",name:"Zebronics ZEB-K500MW Wireless Keyboard Mouse",price:"₹999",old:"₹2,499",emoji:"⌨️",badge:"",url:amzSearch("Zebronics wireless keyboard mouse combo")},
+  {cat:"Electronics",name:"Realme Buds Air 5 Pro ANC Earbuds",price:"₹4,999",old:"₹6,999",emoji:"🎧",badge:"ANC",url:amzSearch("Realme Buds Air 5 Pro")},
+
+  // ── SMARTPHONES (10) ──
+  {cat:"Smartphones",name:"Samsung Galaxy S24 Ultra 256GB",price:"₹1,29,999",old:"",emoji:"📱",badge:"FLAGSHIP",url:amzLink("B0CS5H4V6G")},
+  {cat:"Smartphones",name:"Apple iPhone 15 128GB",price:"₹72,900",old:"₹79,900",emoji:"📱",badge:"APPLE",url:amzLink("B0CHX3QBCH")},
+  {cat:"Smartphones",name:"OnePlus 12 256GB",price:"₹64,999",old:"₹69,999",emoji:"📱",badge:"FAST",url:amzLink("B0CQ6ZVNQ7")},
+  {cat:"Smartphones",name:"Samsung Galaxy A55 5G 128GB",price:"₹34,999",old:"₹38,999",emoji:"📱",badge:"5G",url:amzSearch("Samsung Galaxy A55 5G")},
+  {cat:"Smartphones",name:"Apple iPhone 15 Pro 128GB",price:"₹1,19,900",old:"₹1,34,900",emoji:"📱",badge:"PRO",url:amzLink("B0CHX2F5QT")},
+  {cat:"Smartphones",name:"Nothing Phone (2a) 128GB",price:"₹23,999",old:"₹27,999",emoji:"📱",badge:"UNIQUE",url:amzSearch("Nothing Phone 2a")},
+  {cat:"Smartphones",name:"Motorola Edge 50 Pro 256GB",price:"₹29,999",old:"₹35,999",emoji:"📱",badge:"",url:amzSearch("Motorola Edge 50 Pro")},
+  {cat:"Smartphones",name:"Realme 12 Pro+ 5G 256GB",price:"₹27,999",old:"₹31,999",emoji:"📱",badge:"CAMERA",url:amzSearch("Realme 12 Pro Plus 5G")},
+  {cat:"Smartphones",name:"Xiaomi 14 5G 256GB",price:"₹59,999",old:"₹65,999",emoji:"📱",badge:"LEICA",url:amzSearch("Xiaomi 14 5G")},
+  {cat:"Smartphones",name:"Vivo V30 Pro 5G 256GB",price:"₹36,999",old:"₹42,999",emoji:"📱",badge:"AURA",url:amzSearch("Vivo V30 Pro 5G")},
+
+  // ── LAPTOPS (8) ──
+  {cat:"Laptops",name:"Apple MacBook Air M2 13-inch 8GB",price:"₹1,14,900",old:"₹1,19,900",emoji:"💻",badge:"M2 CHIP",url:amzLink("B0B3C5HQHQ")},
+  {cat:"Laptops",name:"Apple MacBook Pro M3 14-inch",price:"₹1,69,900",old:"₹1,79,900",emoji:"💻",badge:"PRO",url:amzLink("B0CM5JV268")},
+  {cat:"Laptops",name:"HP Pavilion 15 Intel i5 12th Gen",price:"₹54,990",old:"₹67,390",emoji:"💻",badge:"",url:amzSearch("HP Pavilion 15 i5 12th gen")},
+  {cat:"Laptops",name:"Dell Inspiron 15 Intel i5 13th Gen",price:"₹57,990",old:"₹69,990",emoji:"💻",badge:"DELL",url:amzSearch("Dell Inspiron 15 i5 13th gen")},
+  {cat:"Laptops",name:"ASUS VivoBook 15 Ryzen 5 16GB",price:"₹47,990",old:"₹58,990",emoji:"💻",badge:"VALUE",url:amzSearch("ASUS VivoBook 15 Ryzen 5")},
+  {cat:"Laptops",name:"Lenovo IdeaPad Slim 5 Intel i5",price:"₹52,990",old:"₹63,990",emoji:"💻",badge:"SLIM",url:amzSearch("Lenovo IdeaPad Slim 5 i5")},
+  {cat:"Laptops",name:"Acer Aspire 5 Intel i5 12th Gen",price:"₹44,990",old:"₹54,990",emoji:"💻",badge:"",url:amzSearch("Acer Aspire 5 i5 12th gen")},
+  {cat:"Laptops",name:"MSI Modern 15 Intel i7 OLED",price:"₹74,990",old:"₹89,990",emoji:"💻",badge:"OLED",url:amzSearch("MSI Modern 15 i7 OLED")},
+
+  // ── GAMING (8) ──
+  {cat:"Gaming",name:"Sony PlayStation 5 Console",price:"₹54,990",old:"₹59,990",emoji:"🎮",badge:"PS5",url:amzLink("B08H93ZRK9")},
+  {cat:"Gaming",name:"Microsoft Xbox Series X 1TB",price:"₹52,990",old:"₹57,990",emoji:"🎮",badge:"XBOX",url:amzLink("B08H75RTZ8")},
+  {cat:"Gaming",name:"Nintendo Switch OLED Model",price:"₹29,999",old:"₹34,999",emoji:"🕹️",badge:"OLED",url:amzLink("B09GFTNSSL")},
+  {cat:"Gaming",name:"Sony DualSense Wireless Controller",price:"₹5,990",old:"₹6,990",emoji:"🎮",badge:"",url:amzLink("B08FC5L3RG")},
+  {cat:"Gaming",name:"Logitech G502 HERO Gaming Mouse",price:"₹4,495",old:"₹6,495",emoji:"🖱️",badge:"GAMING",url:amzLink("B07GBZ4Q68")},
+  {cat:"Gaming",name:"HyperX Cloud II Gaming Headset",price:"₹6,999",old:"₹9,999",emoji:"🎧",badge:"7.1 SURROUND",url:amzLink("B00SAYCXWG")},
+  {cat:"Gaming",name:"Razer DeathAdder V3 Gaming Mouse",price:"₹5,499",old:"₹7,499",emoji:"🖱️",badge:"RAZER",url:amzSearch("Razer DeathAdder V3")},
+  {cat:"Gaming",name:"SteelSeries Arctis Nova 3 Headset",price:"₹7,999",old:"₹10,999",emoji:"🎧",badge:"",url:amzSearch("SteelSeries Arctis Nova 3")},
+
+  // ── BOOKS (15) ──
+  {cat:"Books",name:"Atomic Habits — James Clear",price:"₹499",old:"₹799",emoji:"📚",badge:"#1 BESTSELLER",url:amzLink("B01N5AX61W")},
+  {cat:"Books",name:"Rich Dad Poor Dad — Robert Kiyosaki",price:"₹299",old:"₹450",emoji:"📚",badge:"CLASSIC",url:amzSearch("Rich Dad Poor Dad Robert Kiyosaki")},
+  {cat:"Books",name:"The Psychology of Money — Morgan Housel",price:"₹359",old:"₹599",emoji:"📚",badge:"MUST READ",url:amzLink("B08D9WJ9G8")},
+  {cat:"Books",name:"Ikigai — Héctor García & Francesc Miralles",price:"₹199",old:"₹350",emoji:"📚",badge:"",url:amzLink("B06XFTVQBB")},
+  {cat:"Books",name:"Think and Grow Rich — Napoleon Hill",price:"₹149",old:"₹299",emoji:"📚",badge:"LEGENDARY",url:amzSearch("Think and Grow Rich Napoleon Hill")},
+  {cat:"Books",name:"The Alchemist — Paulo Coelho",price:"₹179",old:"₹299",emoji:"📚",badge:"",url:amzLink("B00U6SFUSS")},
+  {cat:"Books",name:"Sapiens — Yuval Noah Harari",price:"₹499",old:"₹799",emoji:"📚",badge:"MIND BLOWING",url:amzLink("B013TGXNVG")},
+  {cat:"Books",name:"Zero to One — Peter Thiel",price:"₹299",old:"₹499",emoji:"📚",badge:"STARTUP",url:amzLink("B00KHX0II4")},
+  {cat:"Books",name:"Deep Work — Cal Newport",price:"₹349",old:"₹599",emoji:"📚",badge:"",url:amzLink("B013UGXZNG")},
+  {cat:"Books",name:"The 48 Laws of Power — Robert Greene",price:"₹599",old:"₹999",emoji:"📚",badge:"POWER",url:amzSearch("48 Laws of Power Robert Greene")},
+  {cat:"Books",name:"The Subtle Art of Not Giving a F*ck",price:"₹299",old:"₹499",emoji:"📚",badge:"TRENDING",url:amzSearch("Subtle Art of Not Giving a Fck Mark Manson")},
+  {cat:"Books",name:"Man's Search for Meaning — Viktor Frankl",price:"₹199",old:"₹350",emoji:"📚",badge:"",url:amzSearch("Mans Search for Meaning Viktor Frankl")},
+  {cat:"Books",name:"The Lean Startup — Eric Ries",price:"₹499",old:"₹799",emoji:"📚",badge:"ENTREPRENEUR",url:amzSearch("The Lean Startup Eric Ries")},
+  {cat:"Books",name:"Good to Great — Jim Collins",price:"₹549",old:"₹899",emoji:"📚",badge:"",url:amzSearch("Good to Great Jim Collins")},
+  {cat:"Books",name:"Mindset — Carol S. Dweck",price:"₹299",old:"₹499",emoji:"📚",badge:"GROWTH",url:amzSearch("Mindset Carol Dweck")},
+
+  // ── FASHION (10) ──
+  {cat:"Fashion",name:"Levi's Men's 511 Slim Fit Jeans",price:"₹2,399",old:"₹3,999",emoji:"👖",badge:"-40%",url:amzSearch("Levis 511 slim fit jeans men")},
+  {cat:"Fashion",name:"Nike Air Max 270 Running Shoes",price:"₹8,495",old:"₹11,495",emoji:"👟",badge:"NIKE",url:amzSearch("Nike Air Max 270 men")},
+  {cat:"Fashion",name:"Adidas Ultraboost 22 Running Shoes",price:"₹9,999",old:"₹14,999",emoji:"👟",badge:"ADIDAS",url:amzSearch("Adidas Ultraboost 22")},
+  {cat:"Fashion",name:"Ray-Ban Aviator Classic Sunglasses",price:"₹6,490",old:"₹8,490",emoji:"🕶️",badge:"ICONIC",url:amzLink("B001G75TDC")},
+  {cat:"Fashion",name:"Titan Analog Watch for Men",price:"₹2,495",old:"₹3,495",emoji:"⌚",badge:"",url:amzSearch("Titan analog watch men")},
+  {cat:"Fashion",name:"Peter England Men's Formal Shirt",price:"₹899",old:"₹1,799",emoji:"👔",badge:"-50%",url:amzSearch("Peter England formal shirt men")},
+  {cat:"Fashion",name:"Allen Solly Men's Slim Fit Chinos",price:"₹1,299",old:"₹2,499",emoji:"👖",badge:"",url:amzSearch("Allen Solly slim fit chinos men")},
+  {cat:"Fashion",name:"Woodland Men's Leather Casual Shoes",price:"₹3,299",old:"₹4,995",emoji:"👞",badge:"WOODLAND",url:amzSearch("Woodland men leather shoes")},
+  {cat:"Fashion",name:"Tommy Hilfiger Laptop Backpack",price:"₹4,999",old:"₹7,999",emoji:"🎒",badge:"PREMIUM",url:amzSearch("Tommy Hilfiger backpack")},
+  {cat:"Fashion",name:"Fastrack Analog Watch for Men",price:"₹1,595",old:"₹2,495",emoji:"⌚",badge:"",url:amzSearch("Fastrack analog watch men")},
+
+  // ── HOME & KITCHEN (10) ──
+  {cat:"Home",name:"Instant Pot Duo 7-in-1 Electric Pressure Cooker",price:"₹8,295",old:"₹10,995",emoji:"🍲",badge:"BESTSELLER",url:amzLink("B00FLYWNYQ")},
+  {cat:"Home",name:"Philips Air Fryer HD9252 1400W",price:"₹6,495",old:"₹9,995",emoji:"🍟",badge:"HEALTHY",url:amzLink("B07T6GNJMQ")},
+  {cat:"Home",name:"Pigeon Stainless Steel Cookware Set",price:"₹1,599",old:"₹2,999",emoji:"🍳",badge:"-47%",url:amzSearch("Pigeon stainless steel cookware set")},
+  {cat:"Home",name:"Milton Thermosteel Flask 1 Litre",price:"₹699",old:"₹1,295",emoji:"☕",badge:"",url:amzSearch("Milton thermosteel flask 1 litre")},
+  {cat:"Home",name:"Borosil Glass Lunch Box Set",price:"₹699",old:"₹1,099",emoji:"🥡",badge:"",url:amzSearch("Borosil glass lunch box")},
+  {cat:"Home",name:"Prestige Electric Kettle 1.5L",price:"₹799",old:"₹1,299",emoji:"🫖",badge:"",url:amzSearch("Prestige electric kettle 1.5 litre")},
+  {cat:"Home",name:"Havells Pedestal Fan 400mm",price:"₹3,299",old:"₹4,495",emoji:"🌀",badge:"",url:amzSearch("Havells pedestal fan 400mm")},
+  {cat:"Home",name:"Cello Plastic Storage Container Set",price:"₹499",old:"₹899",emoji:"📦",badge:"VALUE",url:amzSearch("Cello storage container set")},
+  {cat:"Home",name:"Godrej aer Pocket Car & Room Freshener",price:"₹199",old:"₹299",emoji:"🌸",badge:"",url:amzSearch("Godrej aer pocket freshener")},
+  {cat:"Home",name:"Solimo Microfibre Cleaning Cloth (10 Pack)",price:"₹299",old:"₹499",emoji:"🧹",badge:"",url:amzSearch("Solimo microfibre cleaning cloth")},
+
+  // ── BEAUTY (10) ──
+  {cat:"Beauty",name:"Mamaearth Onion Hair Oil 250ml",price:"₹349",old:"₹499",emoji:"💆",badge:"NATURAL",url:amzLink("B07WPYZQWW")},
+  {cat:"Beauty",name:"WOW Skin Science Vitamin C Face Wash",price:"₹249",old:"₹399",emoji:"✨",badge:"GLOWING",url:amzSearch("WOW skin science vitamin c face wash")},
+  {cat:"Beauty",name:"Lakme Eyeconic Kajal — Deep Black",price:"₹189",old:"₹250",emoji:"👁️",badge:"",url:amzSearch("Lakme eyeconic kajal")},
+  {cat:"Beauty",name:"The Man Company Beard Growth Oil",price:"₹349",old:"₹499",emoji:"🧔",badge:"MEN",url:amzSearch("The Man Company beard oil")},
+  {cat:"Beauty",name:"Himalaya Purifying Neem Face Wash 200ml",price:"₹165",old:"₹220",emoji:"🌿",badge:"HERBAL",url:amzSearch("Himalaya purifying neem face wash")},
+  {cat:"Beauty",name:"Plum Green Tea Pore Cleansing Face Mask",price:"₹349",old:"₹499",emoji:"🍵",badge:"",url:amzSearch("Plum green tea face mask")},
+  {cat:"Beauty",name:"Dove Body Lotion Deeply Nourishing 400ml",price:"₹299",old:"₹425",emoji:"🧴",badge:"",url:amzSearch("Dove body lotion deeply nourishing 400ml")},
+  {cat:"Beauty",name:"Gillette Fusion ProGlide Razor",price:"₹449",old:"₹650",emoji:"🪒",badge:"MEN",url:amzSearch("Gillette Fusion ProGlide razor")},
+  {cat:"Beauty",name:"L'Oreal Paris Serum Hair Oil",price:"₹399",old:"₹599",emoji:"💇",badge:"",url:amzSearch("LOreal Paris serum hair oil")},
+  {cat:"Beauty",name:"Biotique Bio Honey Gel Face Wash 120ml",price:"₹149",old:"₹225",emoji:"🍯",badge:"ORGANIC",url:amzSearch("Biotique Bio Honey Gel face wash")},
+
+  // ── SPORTS & FITNESS (9) ──
+  {cat:"Sports",name:"Boldfit Premium Yoga Mat 6mm",price:"₹699",old:"₹1,499",emoji:"🧘",badge:"-53%",url:amzSearch("Boldfit yoga mat 6mm")},
+  {cat:"Sports",name:"Fitbit Inspire 3 Health & Fitness Tracker",price:"₹7,999",old:"₹9,999",emoji:"💪",badge:"FITBIT",url:amzLink("B0B255BWKC")},
+  {cat:"Sports",name:"Strauss Resistance Bands Set of 5",price:"₹499",old:"₹999",emoji:"🏋️",badge:"",url:amzSearch("Strauss resistance bands set")},
+  {cat:"Sports",name:"Nivia Storm Basketball Size 7",price:"₹699",old:"₹999",emoji:"🏀",badge:"",url:amzSearch("Nivia storm basketball size 7")},
+  {cat:"Sports",name:"Cosco Hi-Power Football Size 5",price:"₹499",old:"₹799",emoji:"⚽",badge:"",url:amzSearch("Cosco Hi Power football size 5")},
+  {cat:"Sports",name:"Aurion Running Shoes for Men",price:"₹1,299",old:"₹2,499",emoji:"👟",badge:"",url:amzSearch("Aurion running shoes men")},
+  {cat:"Sports",name:"Dumbbell Set 10kg with Rod",price:"₹999",old:"₹1,999",emoji:"🏋️",badge:"GYM",url:amzSearch("dumbbell set 10kg with rod")},
+  {cat:"Sports",name:"Decathlon Adjustable Skipping Rope",price:"₹299",old:"₹499",emoji:"🪢",badge:"",url:amzSearch("Decathlon skipping rope adjustable")},
+  {cat:"Sports",name:"Speedo Adult Swimming Goggles",price:"₹699",old:"₹999",emoji:"🏊",badge:"SPEEDO",url:amzSearch("Speedo adult swimming goggles")},
+];
+
+let currentCat = 'all';
+let currentSearch = '';
+
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  const noResults = document.getElementById('noResults');
+  const countDisplay = document.getElementById('countDisplay');
+  grid.innerHTML = '';
+  let count = 0;
+  PRODUCTS.forEach((p, i) => {
+    const catMatch = currentCat === 'all' || p.cat === currentCat;
+    const searchMatch = !currentSearch || p.name.toLowerCase().includes(currentSearch) || p.cat.toLowerCase().includes(currentSearch);
+    if (!catMatch || !searchMatch) return;
+    count++;
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <div class="product-emoji">
+        ${p.emoji}
+        ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+      </div>
+      <div class="product-cat">${p.cat}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-price">${p.price}${p.old ? `<span class="product-old">${p.old}</span>` : ''}</div>
+      <a class="product-btn" href="${p.url}" target="_blank" rel="noopener">View on Amazon →</a>
+    `;
+    grid.appendChild(card);
+  });
+  countDisplay.textContent = count;
+  noResults.style.display = count === 0 ? 'block' : 'none';
+}
+
+function filterCat(cat, el) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  currentSearch = '';
+  document.getElementById('searchInput').value = '';
+  renderProducts();
+}
+
+function doSearch() {
+  currentSearch = document.getElementById('searchInput').value.toLowerCase().trim();
+  currentCat = 'all';
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector('.cat-pill').classList.add('active');
+  renderProducts();
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
 });
-document.getElementById('totalLinks').textContent=NUM_LINKS;
-document.getElementById('remaining').textContent=NUM_LINKS;
+
+// Init
+renderProducts();
+
+// AdSense
+try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
+try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
 </script>
 </body>
 </html>
