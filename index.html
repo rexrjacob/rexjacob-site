@@ -14,7 +14,7 @@ body{background:var(--bg);color:var(--cream);font-family:'Montserrat',sans-serif
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 40%,rgba(201,168,76,0.06) 0%,transparent 55%),radial-gradient(ellipse at 85% 20%,rgba(201,168,76,0.04) 0%,transparent 45%);pointer-events:none;z-index:0}
 .topbar{position:relative;z-index:10;background:linear-gradient(90deg,#1a1408,#2a2010,#1a1408);border-bottom:1px solid var(--gold-border);padding:8px 40px;display:flex;justify-content:space-between;align-items:center;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.55)}
 @media(max-width:600px){.topbar{padding:8px 16px;flex-direction:column;gap:4px;text-align:center;font-size:0.48rem}}
-header{position:relative;z-index:10;text-align:center;padding:50px 20px 40px;border-bottom:1px solid var(--gold-border);background:linear-gradient(180deg,rgba(201,168,76,0.04) 0%,transparent 100%)}
+header{position:relative;z-index:10;text-align:center;padding:50px 20px 40px;border-bottom:1px solid var(--gold-border);background:linear-gradient(180deg,rgba(201,168,76,0.04) 0%,transparent 100%);display:flex;flex-direction:column;align-items:center;justify-content:center}
 .crown{font-size:2rem;display:block;margin-bottom:16px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(201,168,76,0.5))}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 .site-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,9vw,6rem);font-weight:300;letter-spacing:0.35em;color:var(--gold);text-shadow:0 0 50px rgba(201,168,76,0.25)}
@@ -69,7 +69,7 @@ footer{position:relative;z-index:10;text-align:center;padding:40px 20px;font-siz
 </div>
 <header>
   <span class="crown">♛</span>
-  <h1 class="site-title">REXJACOB</h1>
+  <h1 class="site-title">REX JACOB</h1>
   <div class="divider"></div>
   <p class="tagline">100 Curated Amazon picks · Search anything</p>
 </header>
@@ -91,7 +91,6 @@ footer{position:relative;z-index:10;text-align:center;padding:40px 20px;font-siz
   <div class="cat-pill" onclick="filterCat('Beauty',this)">Beauty</div>
   <div class="cat-pill" onclick="filterCat('Sports',this)">Sports</div>
 </div>
-<div class="ad-slot"><div class="ad-inner"><ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
 <div class="amazon-fallback" id="amazonFallback">
   <div class="fallback-card">
     <span class="fallback-icon">🔍</span>
@@ -102,6 +101,7 @@ footer{position:relative;z-index:10;text-align:center;padding:40px 20px;font-siz
   </div>
 </div>
 <div class="results-bar" id="resultsBar">
+<div class="ad-slot" id="topAdSlot"><div class="ad-inner"><ins class="adsbygoogle" style="display:block;width:100%;min-height:90px" data-ad-client="ca-pub-8161475797054092" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
   <div class="results-count">Showing <span id="countDisplay">100</span> products</div>
 </div>
 <div class="grid" id="productGrid"></div>
@@ -280,6 +280,7 @@ function renderProducts(){
   if(count===0&&currentSearch){
     fallback.style.display='block';
     resultsBar.style.display='none';
+    document.getElementById('topAdSlot').style.display='none';
     document.getElementById('fallbackTerm').textContent=currentSearch;
     const searchUrl=`https://www.amazon.in/s?k=${encodeURIComponent(currentSearch)}&tag=${TAG}`;
     const btn=document.getElementById('fallbackBtn');
@@ -288,6 +289,7 @@ function renderProducts(){
   } else {
     fallback.style.display='none';
     resultsBar.style.display='flex';
+    document.getElementById('topAdSlot').style.display='block';
   }
 }
 function filterCat(cat,el){
